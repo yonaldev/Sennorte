@@ -1,0 +1,39 @@
+fieldset {
+    border: solid #b6b6b6 1px;
+    border-radius: 5px;
+}
+
+fieldset legend {
+    padding: 0 10px;
+}
+
+.no-border {
+    border: 0 !important;
+}
+
+.legend-formula-derecha {
+    position: absolute;
+    bottom: -20px;
+    right: 30px;
+    z-index: 999;
+    padding: 0 5px;
+    background: #fff;
+}
+
+.legend-formula-izquierda {
+    position: absolute;
+    bottom: -20px;
+    z-index: 999;
+    padding: 0 5px;
+    background: #fff;
+}
+
+.radio-medicamentos {
+    display: inline-flex;
+    flex-direction: column;
+    min-height: 40px;
+    max-height: 200px;
+    min-width: 300px;
+    max-width: 400px;
+    overflow-y: scroll;
+}

@@ -1,0 +1,69 @@
+<mat-toolbar class="p-0 mat-elevation-z1">
+
+    <mat-progress-bar *ngIf="showLoadingBar" class="loading-bar" color="accent" mode="indeterminate"></mat-progress-bar>
+
+    <div fxFlex fxFill fxLayout="row" fxLayoutAlign="start center">
+
+        <div fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+
+            <button mat-icon-button class="navbar-toggle-button" *ngIf="!hiddenNavbar && !rightNavbar" (click)="toggleSidebarOpen('navbar')"
+                fxHide.gt-md>
+                <mat-icon class="secondary-text">menu</mat-icon>
+            </button>
+
+            <div class="toolbar-separator"></div>
+
+            <div class="px-8 px-mat-16">
+                <button [routerLink]="'/'" matTooltip="Pagina principal" mat-icon-button>
+                    <mat-icon class="secondary-text" >home</mat-icon>
+                </button>
+            </div>
+            <div class="toolbar-separator"></div>
+
+            <div class="px-8 px-mat-16">
+                <fuse-shortcuts [navigation]="navigation"></fuse-shortcuts>
+            </div>
+            <div class="toolbar-separator"></div>
+
+        </div>
+
+        <div class="" fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center">
+            <div class="toolbar-separator"></div>
+            <!-- <div class="px-8 px-mat-16" matTooltip="Academia">
+                <button [routerLink]="'/apps/academy'" mat-icon-button>
+                    <mat-icon class="secondary-text">school</mat-icon>
+                </button>
+            </div> -->
+            <div class="px-8 px-mat-16" matTooltip="Mapa del sitio">
+                <button [routerLink]="'/apps/navigation-map'" mat-icon-button>
+                    <mat-icon class="secondary-text">map</mat-icon>
+                </button>
+            </div>
+            <div class="toolbar-separator"></div>
+            <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <img class="avatar mr-0 mr-sm-16" src="assets/images/avatars/profile.jpg">
+                    <span class="username mr-12" fxHide fxShow.gt-sm>{{ userLogged.nombre }}</span>
+                    <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>
+                </div>
+
+            </button>
+
+            <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
+
+                <!-- <button mat-menu-item [routerLink]="'/config/cuenta'">
+                    <mat-icon>tag_faces</mat-icon>
+                    <span>Editar perfil</span>
+                </button> -->
+                <button mat-menu-item (click)="logout($event)">
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>Cerrar sesión</span>
+                </button>
+
+            </mat-menu>
+
+        </div>
+
+    </div>
+
+</mat-toolbar>

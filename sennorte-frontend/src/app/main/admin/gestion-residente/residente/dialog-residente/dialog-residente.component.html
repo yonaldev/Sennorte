@@ -1,0 +1,281 @@
+<form name="registroResidenteForm" [formGroup]=" !flagAcudiente ? registroResidenteForm : registroResidenteFormSelect"
+  (ngSubmit)="onSubmit()" novalidate>
+
+  <h2 mat-dialog-title><b>Registrar nuevo residente</b></h2>
+
+  <mat-dialog-content class="roboto h-420">
+
+  <mat-expansion-panel [expanded]="true">
+
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Información de acudiente
+      </mat-panel-title>
+      <mat-panel-description>
+        {{ !flagAcudiente ? 'Suministre información del acudiente' : 'Seleccione un acudiente' }}
+        <mat-icon>supervised_user_circle</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row">
+      <div class="col-md-12 row">
+        <div class="col-md-12 ml-0">
+          <a (click)="flagAcudiente = !flagAcudiente" [color]="flagAcudiente ? 'warn' : 'primary'"
+            mat-raised-button [@animate]="{value:'*',params:{delay:'50ms',x:'-25px'}}">
+            {{ !flagAcudiente ? 'Seleccionar acudiente' : 'Registrar acudiente' }}
+          </a>
+        </div>
+      </div>
+
+
+
+      
+    </div>
+    <mat-datepicker #picker></mat-datepicker>
+    
+    <!--Seleccionar acudiente-->
+    <div *ngIf="flagAcudiente" class="col-md-12 row" [@animate]="{value:'*',params:{delay:'50ms',x:'-25px'}}">
+      
+      <mat-form-field class="col-md-6">
+        <mat-select placeholder="Acudiente" [formControlName]="flagAcudiente ? 'id_acudiente' : null"
+        [(ngModel)]="id_acudiente2.id_acudiente2" class="roboto">
+        <mat-option *ngFor="let items of acudiente" [value]="items.id_acudiente">
+          {{ items.nombre_acudiente + ' - ' + items.id_acudiente}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  
+  <!--Registrar acudiente-->
+  <div *ngIf="!flagAcudiente" class="col-md-12 row" [@animate]="{value:'*',params:{delay:'50ms', x:'-25px'}}">
+    
+    <mat-form-field class="col-md-5">
+      <mat-label>Documento de identidad</mat-label>
+      <input matInput [formControlName]=" !flagAcudiente ? 'id_acudiente' : null " [(ngModel)]="id_acudiente2.id_acudiente2"
+      required>
+      <span matPrefix class="fa fa-address-card primary-400-fg">&nbsp;&nbsp;</span>
+      <mat-error *ngIf="documentoAcudiente.invalid">
+        {{ getErrorMessageDocumentoAcudiente() }}
+      </mat-error>
+    </mat-form-field>
+    
+    <mat-form-field class="col-md-3">
+      <mat-label>Nombre completo</mat-label>
+      <input matInput [formControlName]="!flagAcudiente ? 'nombre_acudiente' : null" [(ngModel)]="formAcudiente.nombre_acudiente"
+      required>
+        <span matPrefix class="fa fa-user-tie primary-400-fg">&nbsp;&nbsp;</span>
+      <mat-hint>Nombre(s) y apellidos</mat-hint>
+      <mat-error>
+        Campo requerido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-4">
+      <mat-label>Dirección de residencia</mat-label>
+      <input matInput [formControlName]="!flagAcudiente ? 'direccion_acudiente' : null" [(ngModel)]="formAcudiente.direccion_acudiente"
+        required>
+        <span matPrefix class="fas fa-map-marker-alt primary-400-fg">&nbsp;&nbsp;</span>
+      <mat-error>
+        Campo requerido
+      </mat-error>
+    </mat-form-field>
+    
+    <mat-form-field class="col-md-4">
+      <mat-label>Primer teléfono</mat-label>
+      <input matInput [formControlName]="!flagAcudiente ? 'telefono_1' : null" [(ngModel)]="formAcudiente.telefono_1">
+      <span matPrefix class="fa fa-phone primary-400-fg">1&nbsp;&nbsp;</span>
+      <mat-error *ngIf="telefono1.invalid">
+        {{ getErrorMessageTelefono1() }}
+      </mat-error>
+    </mat-form-field>
+    
+    <mat-form-field class="col-md-4">
+      <mat-label>Segundo teléfono</mat-label>
+      <input matInput [(ngModel)]="formAcudiente.telefono_2" [formControlName]="!flagAcudiente ? 'telefono_2' : null">
+      <span matPrefix class="fa fa-phone primary-400-fg">2&nbsp;&nbsp;</span>
+      <mat-error *ngIf="telefono2.invalid">
+        {{ getErrorMessageTelefono2() }}
+      </mat-error>
+    </mat-form-field>
+    
+    <mat-form-field class="col-md-4">
+      <mat-label>Fecha de nacimiento</mat-label>
+      <input matInput [formControlName]="!flagAcudiente ? 'fecha_nacimiento_acudiente' : null" [matDatepicker]="nacimiento"
+        (focus)="nacimiento.open()" [(ngModel)]="formAcudiente.fecha_nacimiento_acudiente" required>
+        <mat-datepicker-toggle matSuffix [for]="nacimiento"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #nacimiento></mat-datepicker>
+      <span matPrefix class="fa fa-birthday-cake  primary-400-fg">&nbsp;&nbsp;</span>
+      <mat-error *ngIf="nacimientoAcudiente.invalid">
+        {{ getErrorMessageNacimientoAcudiente() }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-4">
+      <mat-label>Estado civil</mat-label>
+      <mat-select class="roboto" [formControlName]="!flagAcudiente ? 'id_estado_civil_acudiente' : null"
+      [(ngModel)]="formAcudiente.id_estado_civil" required>
+      <mat-option *ngFor="let items of estado_civil" [value]="items.id_estado_civil">
+        {{ items.estado_civil }}
+      </mat-option>
+    </mat-select>
+    <span matPrefix class="fa fa-ring primary-400-fg">&nbsp;&nbsp;</span>
+    <mat-error>
+      Campo requerido
+    </mat-error>
+  </mat-form-field>
+  
+</div>
+
+</mat-expansion-panel>
+  
+ 
+    <div class="h-4"></div>
+    <mat-accordion class="example-headers-align mb-8" multi>
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Información del residente
+          </mat-panel-title>
+          <mat-panel-description>
+            Datos básicos del residente
+            <mat-icon>account_circle</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p class="info-label">Credenciales</p>
+        <div class="row">
+
+          <mat-form-field class="col-md-5">
+            <mat-label>Documento de identidad</mat-label>
+            <input matInput formControlName="id_residente" [(ngModel)]="formResidente.id_residente" required>
+            <span matPrefix class="fa fa-address-card primary-400-fg">&nbsp;&nbsp;</span>
+            <mat-error *ngIf="documentoResidente.invalid">
+              {{ getErrorMessageDocumentoResidente() }}
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+        <p class="info-label mt-8">Información personal</p>
+        <div class="row">
+
+          <mat-form-field class="col-md-3">
+            <mat-label>Primer nombre</mat-label>
+            <input matInput formControlName="nombre1_residente" [(ngModel)]="formResidente.nombre1_residente" required>
+            <span matPrefix class="fa fa-user-tie primary-400-fg">&nbsp;&nbsp;</span>
+            <mat-error>
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-3">
+            <mat-label>Segundo nombre</mat-label>
+            <input matInput formControlName="nombre2_residente" [(ngModel)]="formResidente.nombre2_residente">
+          </mat-form-field>
+
+          <mat-form-field class="col-md-6">
+            <mat-label>Apellidos</mat-label>
+            <input matInput formControlName="apellido_residente" [(ngModel)]="formResidente.apellido_residente"
+              required>
+            <mat-error>
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+
+        <div class="row">
+          <mat-form-field class="col-md-4">
+            <mat-label>Fecha de nacimiento</mat-label>
+            <input matInput formControlName="fecha_nacimiento_residente" [matDatepicker]="nacimiento" (focus)="nacimiento.open()"
+              [(ngModel)]="formResidente.fecha_nacimiento_residente" required>
+            <span matPrefix class="fa fa-birthday-cake  primary-400-fg">&nbsp;&nbsp;</span>
+            <mat-datepicker-toggle matSuffix [for]="nacimiento"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #nacimiento></mat-datepicker>
+            <mat-error *ngIf="nacimientoResidente.invalid">
+              {{ getErrorMessageNacimientoResidente() }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-3">
+            <mat-label>Género</mat-label>
+            <mat-select class="roboto" formControlName="sexo" [(ngModel)]="formResidente.sexo" required>
+              <mat-option value="masculino">Masculino</mat-option>
+              <mat-option value="femenino">Femenino</mat-option>
+              <mat-option value="otro">Otro</mat-option>
+            </mat-select>
+            <mat-error>
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-3">
+            <mat-label>Peso</mat-label>
+            <input matInput formControlName="peso" [(ngModel)]="formResidente.peso" required>
+            <span matSuffix>&nbsp;&nbsp;Kg</span>
+            <mat-error>
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-3">
+            <mat-select placeholder="EPS" class="roboto" formControlName="eps_id_eps" [(ngModel)]="formResidente.eps_id_eps"
+              required>
+              <mat-option *ngFor="let items of eps" [value]="items.eps_id_eps">
+                {{ items.nombre_eps }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-3">
+            <mat-select placeholder="Estado civil" class="roboto" formControlName="id_estado_civil" [(ngModel)]="formResidente.id_estado_civil"
+              required>
+              <mat-option *ngFor="let items of estado_civil" [value]="items.id_estado_civil">
+                {{ items.estado_civil }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+
+          <!-- <mat-form-field class="col-md-3">
+            <mat-select placeholder="Cama residente" class="roboto" formControlName="id_cama" [(ngModel)]="formResidente.id_cama"
+              required>
+              <mat-option *ngFor="let items of cama" [value]="items.id_cama">
+                {{ 'Cama ' + items.cama + ' - Habitación ' + items.habitacion }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              Campo requerido
+            </mat-error>
+          </mat-form-field> -->
+
+          <mat-form-field class="col-md-3">
+            <mat-label>Parentesco del acudiente</mat-label>
+            <mat-select Campo requerido matInput formControlName="parentesco" [(ngModel)]="formResidente.parentesco"
+              class="roboto" required>
+              <mat-option value="Hijo">Hijo(a)</mat-option>
+              <mat-option value="Nieto">Nieto(a)</mat-option>
+              <mat-option value="Hermano">Hermano(a)</mat-option>
+            </mat-select>
+            <mat-error>
+
+            </mat-error>
+          </mat-form-field>
+
+        </div>
+      </mat-expansion-panel>
+      
+    </mat-accordion>
+  </mat-dialog-content>
+  <div mat-dialog-actions align="end">
+    <a mat-button (click)="close()" class="btn-new">Cancelar </a>
+    <button *ngIf="!flagAcudiente" mat-raised-button color="warn" type="submit" [disabled]="registroResidenteForm.invalid">
+      Registrar
+    </button>
+    <button *ngIf="flagAcudiente" mat-raised-button color="warn" type="submit">
+      Registrar
+    </button>
+  </div>
+</form>

@@ -1,0 +1,96 @@
+<div class="py-28">
+    <div class="row" fxHide.gt-xs>
+       </div>
+    
+    <div class="w-100-p pt-16 fuse-white-bg mat-elevation-z8">
+      <div class="col-md-12">
+        <mat-slide-toggle [matTooltip]="isChecked ? 'Ver usuarios activos' : 'Ver usuarios inhabilitados'"
+        [(ngModel)]="isChecked" color="warn" (change)="toggle($event)">
+        </mat-slide-toggle>
+        
+        <mat-form-field appearance="fill" fxFlex fxHide fxShow.gt-xs class="pb-0" fxLayoutAlign="end">
+          <mat-label>Buscar usuario</mat-label>
+          <input matInput (keyup)="applyFilter($event.target.value)">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field> 
+
+        <button mat-fab matTooltip="Registrar usuario" color="primary" 
+         class="ml-8" (click)="openModalResgistroAcudiente()">
+          <mat-icon>person_add</mat-icon>
+        </button>
+
+      </div>
+    </div>
+
+    <div class="acudienteTable mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+    
+        <!-- ID Column -->
+        <ng-container matColumnDef="id_acudiente">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Documento </th>
+          <td class="roboto" mat-cell *matCellDef="let row"> {{ row.id_acudiente }} </td>
+        </ng-container>
+    
+        <!-- Progress Column -->
+        <ng-container matColumnDef="nombre_acudiente">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre completo </th>
+          <td class="roboto" mat-cell *matCellDef="let row"> {{row.nombre_acudiente}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="direccion_acudiente">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Dirección </th>
+            <td class="roboto" mat-cell *matCellDef="let row"> {{row.direccion_acudiente}} </td>
+          </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="telefono_1">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Primer teléfono </th>
+          <td class="roboto" mat-cell *matCellDef="let row"> {{row.telefono_1}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="telefono_2">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Segundo teléfono </th>
+            <td class="roboto" mat-cell *matCellDef="let row"> {{row.telefono_2}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="fecha_nacimiento_acudiente">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de nacimiento </th>
+            <td class="roboto" mat-cell *matCellDef="let row"> {{row.fecha_nacimiento_acudiente | date:'longDate'}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="id_estado_civil">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado civil </th>
+            <td class="roboto" mat-cell *matCellDef="let row"> {{row.estado_civil}} </td>
+          </ng-container>
+
+        <!-- Color Column -->
+        <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+            <td mat-cell *matCellDef="let row">
+              <div class="button-row" *ngIf="row.estado == 1" fxLayoutAlign="end">
+                <button mat-mini-fab color="accent" (click)="openModalEditar(row)"
+                [matTooltip]="'Editar Acudiente ' + row.nombre_acudiente"
+                matTooltipPosition="left"><mat-icon>edit</mat-icon></button>
+                <button mat-mini-fab color="warn"
+                [matTooltip]="'Inhabilitar a ' + row.nombre_acudiente"
+                matTooltipPosition="left" (click)="cambiarestado(row.nombre_acudiente, 0, row.id_acudiente)" >
+                <mat-icon>visibility_off</mat-icon></button>
+              </div>
+              <div class="button-row" *ngIf="row.estado == 0" fxLayoutAlign="end">
+                <button mat-mini-fab class="green-A700-bg"
+                [matTooltip]="'Habilitar a ' + row.nombre_acudiente"
+                matTooltipPosition="left" (click)="cambiarestado(row.nombre_acudiente, 1, row.id_acudiente)"
+                ><mat-icon>cached</mat-icon></button>
+              </div>
+  
+            </td>
+          </ng-container> 
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+
+

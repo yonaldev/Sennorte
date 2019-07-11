@@ -1,0 +1,73 @@
+<div id="login" class="inner-scroll" fxLayout="row" fxLayoutAlign="start">
+
+    <div id="login-intro" fxFlex fxHide fxShow.gt-xs>
+
+        <div class="logo" [@animate]="{value:'*',params:{scale:'0.2'}}">
+            <img src="assets/images/logos/fuse.svg">
+        </div>
+
+        <div class="title" [@animate]="{value:'*',params:{delay:'300ms',x:'25px'}}">
+            Bienvenido a <b>SENNORTE!</b>
+        </div>
+
+        <div class="description" [@animate]="{value:'*',params:{delay:'400ms',x:'25px'}}">
+            El inicio de sesión es solo para usuarios con cuenta otorgada por la entidad
+            <br> <br> <a [routerLink]="'/'" mat-raised-button color="accent">Inicio</a>
+        </div>
+
+    </div>
+
+    <div id="login-form-wrapper" fusePerfectScrollbar
+         [@animate]="{value:'*',params:{delay:'300ms',x:'100%'}}">
+
+        <div id="login-form">
+
+            <div class="logo" fxHide.gt-xs>
+                <img src="assets/images/logos/fuse.svg">
+            </div>
+
+            <div class="title">INICIAR SESIÓN</div>
+
+            <form name="loginForm" (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+
+                <mat-form-field appearance="fill" class="mb-8">
+                    <mat-label>Documento de identidad</mat-label>
+                    <input matInput name="document" id="document" 
+                    [(ngModel)]="form.document" formControlName="document" required>
+                    <span matPrefix class="fa fa-address-card primary-400-fg">&nbsp;&nbsp;</span>
+                    <mat-error *ngIf="document.invalid">
+                        {{ getErrorMessageDocument() }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput [type]="hide ? 'text' : 'password'" id="password" name="password" 
+                    [(ngModel)]="form.password" formControlName="password" required>
+                    <span matPrefix class="fa fa-key primary-400-fg">&nbsp;&nbsp;</span>
+                    <mat-icon matSuffix (click)="hide = !hide" class="pointer primary-400-fg">
+                        {{ hide ? 'visibility_off' : 'visibility'  }}
+                    </mat-icon>
+                    <mat-error *ngIf="document.invalid">
+                        {{ getErrorMessagePassword() }}
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="remember-forgot-password" fxLayout="row" fxLayout.xs="column"
+                     fxLayoutAlign="end">
+
+                    <a class="forgot-password" [routerLink]="'/auth/forgot-password'">
+                        Olvidaste tu contraseña?
+                    </a>
+                </div>
+
+                <button type="submit" mat-raised-button color="warn" 
+                class="submit-button" aria-label="LOGIN" 
+                [disabled]="!loginForm.valid">
+                    Iniciar sesión
+                </button>
+
+            </form>
+        </div>
+    </div>
+</div>

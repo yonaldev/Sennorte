@@ -1,0 +1,161 @@
+<mat-accordion class="example-headers-align">
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+    <!-- ************Antecedente Personal -->
+    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Antecedente Personal
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-icon>assignment_turned_in</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-form-field class="example-full-width">
+        <textarea matInput #message1 maxlength="256" placeholder="Texto" formControlName="antecedente_residente"></textarea>
+        <mat-hint align="start"><strong>Digita aqui la informacion</strong> </mat-hint>
+        <mat-hint align="end">{{message1.value.length}} / 256</mat-hint>
+      </mat-form-field>
+
+      <mat-action-row>
+        <mat-chip-list>
+          <mat-chip (click)="nextStep()">Siguiente</mat-chip>
+        </mat-chip-list>
+
+      </mat-action-row>
+    </mat-expansion-panel>
+
+    <!-- ************Antecedente Familiar -->
+    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Antecedente Familiar
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-icon>assignment_turned_in</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-form-field class="example-full-width">
+        <textarea matInput #message2 maxlength="256" placeholder="Texto" formControlName="antecedente_familiar"></textarea>
+        <mat-hint align="start"><strong>Digita aqui la informacion</strong> </mat-hint>
+        <mat-hint align="end">{{message2.value.length}} / 256</mat-hint>
+      </mat-form-field>
+
+      <mat-action-row>
+        <mat-chip-list>
+          <mat-chip (click)="prevStep()">Atras</mat-chip>
+          <mat-chip (click)="nextStep()">Siguiente</mat-chip>
+        </mat-chip-list>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+    <!-- *********Antecedente Quirurgico -->
+    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Antecedente Quirurgico
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-icon>assignment_turned_in</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-form-field class="example-full-width">
+        <textarea matInput #message3 maxlength="256" placeholder="Texto" formControlName="antecedente_quirurgico"></textarea>
+        <mat-hint align="start"><strong>Digita aqui la informacion</strong> </mat-hint>
+        <mat-hint align="end">{{message3.value.length}} / 256</mat-hint>
+      </mat-form-field>
+
+      <mat-action-row>
+        <mat-chip-list>
+          <mat-chip (click)="prevStep()">Atras</mat-chip>
+          <mat-chip (click)="nextStep()">Siguiente</mat-chip>
+        </mat-chip-list>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+    <!-- **************Alergias -->
+    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Alergias
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-icon>assignment_turned_in</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-form-field class="example-full-width">
+        <textarea matInput #message4 maxlength="256" placeholder="Texto" formControlName="informe_alergia"></textarea>
+        <mat-hint align="start"><strong>Digita aqui la informacion</strong> </mat-hint>
+        <mat-hint align="end">{{message4.value.length}} / 256</mat-hint>
+      </mat-form-field>
+
+      <mat-action-row>
+        <mat-chip-list>
+          <mat-chip (click)="prevStep()">Atras</mat-chip>
+          <mat-chip (click)="nextStep()">Siguiente</mat-chip>
+        </mat-chip-list>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+    <!-- **************Especialidades -->
+    <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Especialidades
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-icon>assignment_turned_in</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-form-field class="example-full-width">
+        <textarea matInput #message5 maxlength="256" placeholder="Texto" formControlName="especialidades"></textarea>
+        <mat-hint align="start"><strong>Digita aqui la informacion</strong> </mat-hint>
+        <mat-hint align="end">{{message5.value.length}} / 256</mat-hint>
+      </mat-form-field>
+
+      <mat-action-row>
+        <mat-chip-list>
+          <mat-chip (click)="prevStep()">Atras</mat-chip>
+          <mat-chip (click)="nextStep()">Siguiente</mat-chip>
+        </mat-chip-list>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+    <!-- ************Examen Cefalocaudal -->
+    <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Examen Cefalocaudal
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-icon>assignment_turned_in</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-form-field class="example-full-width">
+        <textarea matInput #message6 maxlength="500" placeholder="Texto" formControlName="valoracion_cefalocaudal"></textarea>
+        <mat-hint align="start"><strong>Digita aqui la informacion</strong> </mat-hint>
+        <mat-hint align="end">{{message6.value.length}} / 500</mat-hint>
+      </mat-form-field>
+
+      <mat-action-row>
+        <mat-chip-list>
+          <mat-chip (click)="prevStep()">Atras</mat-chip>
+          <button mat-stroked-button color="primary" (click)="nextStep()" [disabled]="!form.valid">Terminado</button>
+        </mat-chip-list>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+  </form>
+
+</mat-accordion>
+
+<div mat-dialog-actions align="end left">
+  <button mat-raised-button (click)="close()" color="warn" class="btn-new"> Cancelar </button>
+</div>

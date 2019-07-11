@@ -1,0 +1,207 @@
+<div class="page-layout carded fullwidth">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-primary-bg" [@animate]="{value:'*',params:{delay:'50ms',y:'-100px'}}"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- CONTENT HEADER -->
+    <div class="header mat-primary-bg p-24" [@animate]="{value:'*',params:{delay:'50ms',y:'-100px'}}" fxLayout="row"
+      fxLayoutAlign="start center">
+      <a [routerLink]="origen === 'main' ? ['/residente'] : origen === 'profile' ? ['/residente','perfil',doc] : ''"
+        color="accent" fxHide.xs mat-fab>
+        <mat-icon>chevron_left</mat-icon>
+      </a>
+      <a [routerLink]="origen === 'main' ? ['/residente'] : origen === 'profile' ? ['/residente','perfil',doc] : ''"
+        color="accent" fxHide.gt-xs mat-mini-fab>
+        <mat-icon>chevron_left</mat-icon>
+      </a>
+      <h2 class="m-0 ml-24">Editar información de residente</h2>
+      <span style="flex: 1 0 auto"></span>
+      <img *ngIf="informacion?.id_residente" class="avatar huge" [src]=" informacion?.sexo === 'femenino' ? 'assets/images/avatars/old-woman.png' : 'assets/images/avatars/old-man.png'"
+        [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}" fxHide.xs fxHide.sm>
+    </div>
+    <!-- / CONTENT HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card mat-white-bg" [@animate]="{value:'*',params:{delay:'300ms',y:'25px'}}">
+
+      <!-- CONTENT TOOLBAR -->
+      <!-- <div class="toolbar px-24 py-8">
+        <span><b>Residente:</b> {{ informacion?.length === 0 ? 'Cargando...' :
+          name | titlecase }}</span>
+      </div> -->
+      <!-- / CONTENT TOOLBAR -->
+
+      <!-- CONTENT -->
+      <div class="content p-24">
+
+        <div *ngIf="informacion.id_residente === null" fxLayout="column" fxFlex="100" fxLayoutAlign="center center">
+          <mat-progress-spinner [@animate]="{value:'*',params:{delay:'400ms',scale:'.5'}}" mode="indeterminate" color="accent"></mat-progress-spinner>
+          <h1 [@animate]="{value:'*',params:{delay:'400ms',scale:'.5',opacity:'.1',y:'-15px'}}">Cargando</h1>
+        </div>
+
+        <form (ngSubmit)="onSubmit()" [formGroup]="registroResidenteForm" *ngIf="informacion?.id_residente" fxLayout="row wrap"
+          [@animate]="{value:'*',params:{delay:'50ms',opacity:'.5'}}" novalidate>
+
+          <span fxLayout="column" fxFlex="100" class="mat-subheading-2 primary-200-fg">Información del residente</span>
+
+          <mat-form-field fxLayout="column" fxFlex="25" fxFlex.xs="100">
+            <mat-label>Primer nombre</mat-label>
+            <input matInput formControlName="nombre1_residente" [(ngModel)]="informacion.nombre1_residente" required>
+            <span matPrefix class="fa fa-user-tie primary-400-fg">&nbsp;&nbsp;</span>
+            <mat-error>
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxLayout="column" fxFlex="25" fxFlex.xs="100">
+            <mat-label>Segundo nombre</mat-label>
+            <input matInput formControlName="nombre2_residente" [(ngModel)]="informacion.nombre2_residente">
+            <span matPrefix fxHide.gt-xs class="fa fa-user-tie primary-400-fg">&nbsp;&nbsp;</span>
+          </mat-form-field>
+
+          <mat-form-field fxLayout="column" fxFlex="50" fxFlex.xs="100">
+            <mat-label>Apellidos</mat-label>
+            <input matInput formControlName="apellido_residente" [(ngModel)]="informacion.apellido_residente" required>
+            <span matPrefix fxHide.gt-xs class="fa fa-user-tie primary-400-fg">&nbsp;&nbsp;</span>
+            <mat-error>
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="pr-16" fxLayout="column" fxFlex="25" fxFlex.xs="100">
+            <mat-label>Fecha de nacimiento</mat-label>
+            <input matInput formControlName="fecha_nacimiento_residente" [matDatepicker]="nacimiento" (focus)="nacimiento.open()"
+              [(ngModel)]="informacion.fecha_nacimiento_residente" required>
+            <span matPrefix class="fa fa-birthday-cake  primary-400-fg">&nbsp;&nbsp;</span>
+            <mat-datepicker-toggle matSuffix [for]="nacimiento"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #nacimiento></mat-datepicker>
+            <mat-error *ngIf="nacimientoResidente.invalid">
+              {{ getErrorMessageNacimientoResidente() }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="pr-16" fxLayout="column" fxFlex="25" fxFlex.xs="100">
+            <mat-label>Género</mat-label>
+            <mat-select class="roboto" formControlName="sexo" [(ngModel)]="informacion.sexo" required>
+              <mat-option value="masculino">Masculino</mat-option>
+              <mat-option value="femenino">Femenino</mat-option>
+              <mat-option value="otro">Otro</mat-option>
+            </mat-select>
+            <span matPrefix class="fa fa-genderless primary-400-fg">&nbsp;&nbsp;</span>
+            <mat-error>
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="pr-16" fxLayout="column" fxFlex="25" fxFlex.xs="100">
+            <mat-label>Peso</mat-label>
+            <input matInput formControlName="peso" [(ngModel)]="informacion.peso" required>
+            <span matPrefix class="fa fa-balance-scale  primary-400-fg">&nbsp;&nbsp;</span>
+            <span matSuffix>&nbsp;&nbsp;Kg</span>
+            <mat-error *ngIf="pesoResidente.invalid">
+              {{ getErrorMessagePeso() }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxLayout="column" fxFlex="25" fxFlex.xs="100">
+            <mat-select placeholder="EPS" class="roboto" formControlName="eps_id_eps" [(ngModel)]="informacion.eps_id_eps"
+              required>
+              <mat-option *ngFor="let items of eps" [value]="items.eps_id_eps">
+                {{ items.nombre_eps }}
+              </mat-option>
+            </mat-select>
+            <span matPrefix class="fa fa-ambulance  primary-400-fg">&nbsp;&nbsp;</span>
+            <mat-error>
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="pr-16" fxLayout="column" fxFlex="25" fxFlex.xs="100">
+            <mat-select placeholder="Estado civil" class="roboto" formControlName="id_estado_civil" [(ngModel)]="informacion.id_estado_civil"
+              required>
+              <mat-option *ngFor="let items of estado_civil" [value]="items.id_estado_civil">
+                {{ items.estado_civil }}
+              </mat-option>
+            </mat-select>
+            <span matPrefix class="fas fa-gavel primary-400-fg">&nbsp;&nbsp;</span>
+            <mat-error>
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+
+          <!-- <mat-form-field class="pr-16" fxLayout="column" fxFlex="25" fxFlex.xs="100">
+            <mat-select placeholder="Cama residente" class="roboto" formControlName="id_cama" [(ngModel)]="informacion.id_cama"
+              required>
+              <mat-option *ngFor="let items of cama" [value]="items.id_cama">
+                {{ 'Cama ' + items.cama + ' - Habitación ' + items.habitacion }}
+              </mat-option>
+            </mat-select>
+            <span matPrefix class="fa fa-bed  primary-400-fg">&nbsp;&nbsp;</span>
+            <mat-error>
+              Campo requerido
+            </mat-error>
+          </mat-form-field> -->
+
+          <mat-form-field class="pr-16" fxLayout="column" fxFlex="25" fxFlex.xs="100">
+            <mat-label>Parentesco del acudiente</mat-label>
+            <mat-select Campo requerido matInput formControlName="parentesco" [(ngModel)]="informacion.parentesco"
+              class="roboto" required>
+              <mat-option value="Hijo">Hijo(a)</mat-option>
+              <mat-option value="Nieto">Nieto(a)</mat-option>
+              <mat-option value="Nieto">Hermano(a)</mat-option>
+            </mat-select>
+            <span matPrefix class="fab fa-gratipay primary-400-fg">&nbsp;&nbsp;</span>
+            <mat-error>
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Informacion del acudiente -->
+          <span fxLayout="column" fxFlex="100" class="mat-subheading-2 primary-200-fg">Acudiente vinculado</span>
+          <mat-form-field fxLayout="column" fxFlex="50" fxFlex.xs="100">
+            <mat-select placeholder="Acudiente" formControlName="id_acudiente" [(ngModel)]="informacion.id_acudiente"
+              class="roboto" required>
+              <mat-option *ngFor="let items of acudiente" [value]="items.id_acudiente">
+                {{ items.nombre_acudiente + ' - ' + items.id_acudiente}}
+              </mat-option>
+            </mat-select>
+            <span matPrefix class="fa fa-user-friends primary-400-fg">&nbsp;&nbsp;</span>
+            <mat-error>
+              Campo requerido
+            </mat-error>
+          </mat-form-field>
+
+          <blockquote fxLayout="column" fxFlex="100" fxHide.gt-xs>
+            <p>
+              Para registrar un nuevo acudiente haga <a routerLink="/acudiente">clic aquí</a>
+            </p>
+          </blockquote>
+
+          <div fxLayout="column" fxFlex="50" fxFlex.xs="100">
+            <blockquote class="ml-16" fxLayout="column" fxFlex="100" fxHide.xs>
+              <p>
+                Para registrar un nuevo acudiente haga <a routerLink="/acudiente">clic aquí</a>
+              </p>
+            </blockquote>
+            <div fxLayout="row" fxFlex="100" fxLayoutAlign="end end">
+              <a [routerLink]="['/residente']" mat-button>Cancelar</a>
+              <button [disabled]="registroResidenteForm.invalid" class="ml-4" color="primary" mat-raised-button>Guardar</button>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

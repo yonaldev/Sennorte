@@ -1,0 +1,51 @@
+<div matDialogTitle class="pb-0 mb-0">
+  <h1>
+    <span class="titulo"><b>Residente: </b><span class="roboto" style="font-weight: lighter">{{ data.nombre1_residente + ' ' + data.nombre2_residente + ' ' + data.apellido_residente | titlecase }}</span></span>
+    <br><span class="fecha"> {{ data.fecha_formula | date:'longDate' }} </span>
+  </h1>
+  <div class="row roboto">
+    <div class="col-md-6">
+      <small>Documento: <span style="font-weight: lighter">{{ data.id_residente }}</span></small><br>
+      <small>Fórmula N° <span style="font-weight: lighter">{{ data.id_formula }}</span> </small>
+    </div>
+    <div class="col-md-6">
+      <small>Médico: <span style="font-weight: lighter"> {{ data.medico_remitente | titlecase }} </span></small><br>
+      <small>IPS: <span style="font-weight: lighter">{{ data.ips | titlecase }}</span></small>
+    </div>
+  </div>
+</div>
+<mat-dialog-content class="py-24">
+  
+    <div class="mat-elevation-z1">
+      <table mat-table class="w-100-p" [dataSource]="dataSorce">
+        <!-- Referencia Column -->
+        <ng-container matColumnDef="medicamento"> 
+            <th mat-header-cell *matHeaderCellDef> Medicamento </th>
+            <td class="roboto" mat-cell *matCellDef="let row"> 
+              {{ row.nombre_medicamento + ' ' + row.dosis + row.unidad_medida }} 
+            </td>
+        </ng-container>
+    
+        <!-- Residente Column -->
+        <ng-container matColumnDef="especificacion">
+            <th mat-header-cell *matHeaderCellDef> Especificaciones </th>
+            <td class="roboto" mat-cell *matCellDef="let row"> 
+                {{ row.dosis_medicamento > 1 ?  row.dosis_medicamento + ' unidades ' : row.dosis_medicamento + ' unidad ' }} 
+                {{ row.lapso > 1 ? ' cada ' + row.lapso + ' horas. ' : ' cada hora. ' }}
+                {{ row.dias > 1 ? 'Durante ' + row.dias + ' dias' : 'Durante un dia' }}
+            </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayoutAlign="space-between center">
+  <span class="registrado">Fórmula registrada por: {{ data.encargado_formula }}</span>
+  <span class="spacer"></span>
+  
+  <button mat-button matDialogClose>Cerrar</button>
+</mat-dialog-actions>

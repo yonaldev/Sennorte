@@ -1,0 +1,239 @@
+<form [formGroup]="registroFormula" (ngSubmit)="onSubmit()" novalidate>
+
+  <h2 mat-dialog-title>Registrar fórmula médica</h2>
+
+  <mat-dialog-content class="row px-24">
+
+    <fieldset class="no-border">
+
+      <div class="col-md-12 row">
+        <mat-form-field class="col-md-5" *ngIf="!perfil">
+          <mat-label>Documento del residente</mat-label>
+          <input #documento formControlName="documento" (change)="searchResidente(documento.value)" [(ngModel)]="formula.documento"
+            matInput required>
+          <span class="fa fa-address-card primary-400-fg" matPrefix>&nbsp;&nbsp;</span>
+          <mat-hint>Ingrese el documento del residente</mat-hint>
+          <mat-error *ngIf="documento.invalid">
+            {{ getErrorMessageDocumento() }}
+          </mat-error>
+        </mat-form-field>
+        <mat-divider *ngIf="busqueda && !perfil" [@animate]="{value:'*',params:{delay:'100ms',y:'25px'}}" [vertical]="true"></mat-divider>
+        <div class="col-md-6">
+          <span *ngIf="busqueda" [@animate]="{value:'*',params:{delay:'200ms',x:'-25px'}}">
+            <b *ngIf="!perfil">Resúltado de busqueda: '{{ documento.value }}' </b><br>
+            <mat-chip-list>
+              <mat-chip color="primary" *ngIf="exist" class="roboto" selected [@animate]="{value:'*',params:{duration:'400ms',delay:'150ms',opacity:'0.1'}}">{{
+                mensaje | titlecase }}</mat-chip>
+              <mat-chip color="warn" *ngIf="!exist" class="roboto" selected [@animate]="{value:'*',params:{duration:'400ms',delay:'150ms',opacity:'0.1'}}">{{
+                mensaje }}</mat-chip>
+            </mat-chip-list>
+          </span>
+        </div>
+      </div>
+      <legend *ngIf="perfil">Residente asociado</legend>
+      <legend *ngIf="!perfil">Asignar residente</legend>
+    </fieldset>
+    <br>
+
+    <fieldset class="no-border">
+
+      <mat-form-field class="col-md-4">
+        <mat-label>Ref. Fórmula</mat-label>
+        <input matInput [(ngModel)]="formula.ref_formula" id="referencia" formControlName="ref" required>
+        <span class="fa fa-hashtag primary-400-fg" matPrefix>&nbsp;&nbsp;</span>
+        <mat-hint>Número referencial de la fórmula</mat-hint>
+        <mat-error *ngIf="referencia.invalid">
+          {{ getErrorMessageReferencia() }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-4">
+        <mat-label>IPS</mat-label>
+        <input matInput [(ngModel)]="formula.ips" id="ips" formControlName="ips" required>
+        <span class="fa fa-hospital primary-400-fg" matPrefix>&nbsp;&nbsp;</span>
+        <mat-hint>Hospital del cual fue remitida la fórmula</mat-hint>
+        <mat-error *ngIf="ips.invalid">
+          {{ getErrorMessageIPS() }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-4">
+        <mat-label>Fecha de la fórmula</mat-label>
+        <input matInput [(ngModel)]="formula.fecha" formControlName="fecha" [matDatepicker]="inicio" (focus)="inicio.open()"
+          [max]="maxDate" required>
+        <mat-datepicker-toggle matSuffix [for]="inicio"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #inicio></mat-datepicker>
+        <span class="fa fa-hourglass primary-400-fg" matPrefix>&nbsp;&nbsp;</span>
+        <mat-hint>Fecha de elaboración de la fórmula</mat-hint>
+        <mat-error *ngIf="fecha.invalid">
+          {{ getErrorMessageFecha() }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-5">
+        <mat-label>Médico remitente</mat-label>
+        <input matInput [(ngModel)]="formula.medicoRemitente" id="medico" formControlName="medico" required>
+        <span class="fa fa-user-md primary-400-fg" matPrefix>&nbsp;&nbsp;</span>
+        <mat-hint>Medico que elaboro la fórmula médica</mat-hint>
+        <mat-error *ngIf="medico.invalid">
+          {{ getErrorMessageMedico() }}
+        </mat-error>
+      </mat-form-field>
+
+      <legend>Fecha e información de fórmula</legend>
+    </fieldset>
+    <h5 class="col-md-12" *ngIf="registroFormula.invalid">
+      <b>NOTA:</b> Antes de asociar medicamentos debe ingresar el numero de referencia de la fórmula
+    </h5>
+    <div [formGroup]="recetaForm" *ngIf="registroFormula.valid" class="mt-16" [@animate]="{value:'*',params:{duration:'400ms',delay:'150ms',y:'-25px'}}">
+      <fieldset class="no-border" #formReceta>
+        <fieldset class="col-md-12 px-48">
+          <div class="row">
+            <div class="col-md-5">
+              <div class="row">
+
+                <mat-form-field class="col-md-12">
+                  <mat-label>Buscar medicamento</mat-label>
+                  <input (keyup)="searchMedicamento(medicamento.value)" (change)="tiene = true" #medicamento matInput>
+                  <span class="fa fa-search primary-400-fg" matPrefix>&nbsp;&nbsp;</span>
+                  <mat-icon matSuffix>chevron_right</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-12">
+                  <mat-label>Dosis</mat-label>
+                  <input [(ngModel)]="receta.dosis" formControlName="dosis" required matInput>
+                  <span class="fa fa-flask primary-400-fg" matPrefix>&nbsp;&nbsp;</span>
+                  <span matSuffix>unidad(es)</span>
+                  <mat-error *ngIf="dosis.invalid">
+                    {{ getErrorMessageDosis() }}
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-12">
+                  <mat-label>Lapsos</mat-label>
+                  <input [(ngModel)]="receta.lapso" formControlName="lapso" required matInput>
+                  <span matPrefix>Cada&nbsp;&nbsp;</span>
+                  <span matSuffix>hora(s)</span>
+                  <mat-error *ngIf="lapso.invalid">
+                    {{ getErrorMessageLapso() }}
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="col-md-12">
+                  <mat-label>Duración</mat-label>
+                  <input [(ngModel)]="receta.dias" formControlName="dias" required matInput>
+                  <span matPrefix>Durante&nbsp;&nbsp;</span>
+                  <span matSuffix>día(s)</span>
+                  <mat-error *ngIf="dias.invalid">
+                    {{ getErrorMessageDias() }}
+                  </mat-error>
+                </mat-form-field>
+
+              </div>
+            </div>
+            <div class="col-md-6">
+              <p *ngIf="tiene" align="left"><b>Resúltados de la búsqueda:</b> '{{ medicamento.value }}'</p>
+              <p *ngIf="!tiene" align="left"><b>Medicamentos registrados</b></p>
+              <mat-radio-group class="radio-medicamentos" formControlName="medicamento" [(ngModel)]="receta.id_medicamento"
+                [@fold] required>
+                <mat-radio-button *ngFor="let items of medicamentos; index as i" [value]="items.id_medicamento" class="roboto">
+                  {{ items.nombre_medicamento + ' ' + items.dosis + items.unidad_medida + ' - ' +
+                  items.nombre_aplicacion }}
+                </mat-radio-button>
+              </mat-radio-group>
+              <mat-error *ngIf="medicamento.invalid">
+                {{ getErrorMessageMedicamento() }}
+              </mat-error>
+              <div class="col-md-12">
+                <a *ngIf="rolUser == 1" class="mt-16" (click)="openDialogMedicamento()" mat-button>
+                  Registrar medicamento
+                </a>
+              </div>
+            </div>
+          </div>
+          <legend *ngIf="!edit" class="legend-formula-derecha" align="right" [@animate]="{value:'*',params:{delay:'150ms',x:'-25px'}}">
+            <a class="button-receta-guardar" mat-mini-fab [disabled]="recetaForm.invalid" *ngIf="recetaForm.invalid"
+              matTooltip="Asociar medicamento" [@animate]="{value:'*',params:{duration:'100ms',delay:'150ms',scale:'0.1'}}">
+              <mat-icon>expand_more</mat-icon>
+            </a>
+            <a (click)="guardar()" class="button-receta-guardar" mat-mini-fab *ngIf="recetaForm.valid" matTooltip="Asociar medicamento"
+              [@animate]="{value:'*',params:{duration:'100ms',delay:'150ms',scale:'0.1'}}">
+              <mat-icon>expand_more</mat-icon>
+            </a>
+          </legend>
+          <legend *ngIf="edit" class="legend-formula-izquierda" [@animate]="{value:'*',params:{delay:'150ms',x:'25px'}}">
+            <a (click)="modifyItem()" class="button-receta-editar mr-8 light-green-700-bg" matTooltip="Guardar"
+              mat-mini-fab>
+              <mat-icon>check</mat-icon>
+            </a>
+            <a (click)="clear(false)" color="warn" matTooltip="Cancelar" mat-mini-fab>
+              <mat-icon>close</mat-icon>
+            </a>
+          </legend>
+        </fieldset>
+        <legend>Asociar medicamentos</legend>
+      </fieldset>
+      <div class="col-md-12 mt-24">
+
+        <mat-chip-list *ngIf="!asocia" [@animate]="{value:'*',params:{duration:'100ms',delay:'150ms',scale:'0.1'}}">
+          <mat-chip class="roboto">
+            No se han asociado medicamentos
+          </mat-chip>
+        </mat-chip-list>
+
+        <div class="residentesTable mat-elevation-z8" *ngIf="asocia">
+          <div class="mat-primary-bg w-100-p h-50" fxLayout="row" fxLayoutAlign="center center">
+            <h3>Medicamentos asociados</h3>
+          </div>
+          <table mat-table [dataSource]="dataSource" class="w-100-p" matSort>
+
+            <!-- Columna medicamento -->
+            <ng-container matColumnDef="medicamento">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Documento </th>
+              <td class="roboto" mat-cell *matCellDef="let row"> {{row.informacionMedicamento}} </td>
+            </ng-container>
+
+            <!-- Columna información-->
+            <ng-container matColumnDef="informacion">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre completo </th>
+              <td class="roboto" mat-cell *matCellDef="let row"> 
+                {{ row.dosis + (row.dosis > 1 ? ' unidades' : ' unidad') }} 
+                {{ ' cada ' + (row.lapso > 1 ? row.lapso + ' horas' : 'hora.') }}
+                {{ 'Durante ' + (row.dias > 1 ? row.dias + ' dias' : 'un dia') }}
+              </td>
+            </ng-container>
+
+            <!-- Color Column -->
+            <ng-container matColumnDef="accion">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header class="w-100"> Acciones </th>
+              <td mat-cell *matCellDef="let row; let i = index">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <a (click)="editItem(i)" color="primary" matTooltip="Editar" mat-mini-fab>
+                      <mat-icon>edit</mat-icon>
+                    </a>
+                    <a (click)="deleteItem(row)" class="ml-4" color="warn" matTooltip="Eliminar" mat-mini-fab>
+                      <mat-icon>clear</mat-icon>
+                    </a>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </mat-dialog-content>
+
+  <div mat-dialog-actions>
+    <div class="col align-self-end" align="end">
+      <a (click)="closeDialog()" mat-button>Cancelar</a>
+      <button mat-raised-button color="warn" [disabled]="registroFormula.invalid && (asocia === false) && (exist === false)"
+        (click)="validarVariables()">
+        Guardar
+      </button>
+    </div>
+  </div>
+</form>

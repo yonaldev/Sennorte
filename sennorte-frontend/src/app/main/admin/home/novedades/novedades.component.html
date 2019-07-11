@@ -1,0 +1,164 @@
+<div class="px-24 pt-24 row controles" align="end">
+    <button class="inactive ml-12" [@animate]="{value:'*',params:{opacity:'0.5'}}"
+    matTooltip="Ver novedades importantes" matTooltipPosition="left" 
+    mat-mini-fab>
+      <span class="fa fa-star"></span>
+    </button>
+    <button  [@animate]="{value:'*',params:{opacity:'0.5'}}"
+    matTooltip="Ver todas las novedades" matTooltipPosition="left" 
+    color="warn" class="ml-12" mat-mini-fab>
+      <span class="fa fa-star"></span>
+    </button>
+    <mat-form-field class="col-md-2">
+      <mat-select placeholder="Ordenar por..." [(value)]="selected">
+        <mat-option value="1">Mas recientes</mat-option>
+        <mat-option value="2">Mas antiguos</mat-option>
+      </mat-select>
+    </mat-form-field>
+</div>
+<div class="card-columns mb-12 p-24 pb-8" >  
+  <div class="card" *ngFor="let item of items; index as i"
+  [@animate]="{value:'*',params:{delay: (i*200)+'ms',y:'-30px'}}">
+    <mat-card [ngClass]="[item.color ? item.color : '']" *ngIf="item.tipo_novedad == 1">
+      <mat-card-subtitle> {{ item.fecha }} </mat-card-subtitle>
+      <mat-card-title> 
+        <span [ngClass]="item.importancia == 1 ? 'fa fa-star' : ''"></span>
+        {{ item.title }} 
+      </mat-card-title>
+      <mat-card-content class="roboto">
+        <p> {{ item.descripcion }} </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="w-100-p" align="end">
+          <a *ngIf="item.url" [href]="item.url" class="mb-8" mat-stroked-button>ENLACE</a>
+        </div>
+        <div *ngIf="tipoUsuario == 1" class="w-100-p" align="end">
+          <mat-divider ></mat-divider>
+          <!-- <button matTooltip="Editar publicación" matTooltipPosition="above"
+          mat-icon-button><mat-icon>edit</mat-icon></button> -->
+          <button matTooltip="Borrar publicación" matTooltipPosition="above"
+          mat-icon-button (click)="deleteNovedad(item.id_novedad)" ><mat-icon>delete</mat-icon></button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card *ngIf="item.tipo_novedad == 2">
+      <img mat-card-image [src]="item.imagen || 'assets/images/backgrounds/header-bg.png'">
+      <mat-card-subtitle> {{ item.fecha }} </mat-card-subtitle>
+      <mat-card-title>
+        <span [ngClass]="item.importancia == 1 ? 'fa fa-star' : ''"></span> 
+        {{ item.title }}
+      </mat-card-title>
+      <mat-card-content class="roboto">
+        <p>{{ item.descripcion }}</p>
+      </mat-card-content>
+      <mat-card-actions align="end" class="row">
+        <button class="mb-8" (click)="openModal(item)" mat-button>VER MAS</button>
+        <div *ngIf="tipoUsuario == 1" class="w-100-p">
+          <mat-divider ></mat-divider>
+          <!-- <button matTooltip="Editar publicación" matTooltipPosition="above"
+          mat-icon-button><mat-icon>edit</mat-icon></button> -->
+          <button matTooltip="Borrar publicación" matTooltipPosition="above"
+          mat-icon-button (click)="deleteNovedad(item.id_novedad)" ><mat-icon>delete</mat-icon></button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card *ngIf="item.tipo_novedad == 3"
+    [@animate]="{value:'*',params:{delay: 150*i+'ms',x:'-30px'}}">
+      <mat-card-header>
+          <img mat-card-avatar src="assets/images/logos/fuse.svg" >
+          <mat-card-title> 
+            <span [ngClass]="item.importancia == 1 ? 'fa fa-star' : ''"></span>
+            {{ item.title }} 
+          </mat-card-title>
+          <mat-card-subtitle> {{ item.fecha }} </mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image [src]="item.imagen || 'assets/images/backgrounds/header-bg.png'">
+      <mat-card-content class="roboto">
+          <p> {{ item.descripcion }} </p>
+      </mat-card-content>
+      <mat-card-actions *ngIf="tipoUsuario == 1" align="end">
+        <mat-divider></mat-divider>
+        <!-- <button matTooltip="Editar publicación" matTooltipPosition="above"
+        mat-icon-button><mat-icon>edit</mat-icon></button> -->
+        <button matTooltip="Borrar publicación" matTooltipPosition="above"
+        mat-icon-button (click)="deleteNovedad(item.id_novedad)" ><mat-icon>delete</mat-icon></button>
+      </mat-card-actions>
+    </mat-card>
+
+  </div>
+</div>
+<div class="card-columns mb-12 p-24 pb-8" >  
+    <div class="card" *ngFor="let item of itemsImportant; index as i"
+    [@animate]="{value:'*',params:{delay: (i*200)+'ms',y:'-30px'}}">
+      <mat-card [ngClass]="[item.color ? item.color : '']" *ngIf="item.tipo_novedad == 1">
+        <mat-card-subtitle> {{ item.fecha }} </mat-card-subtitle>
+        <mat-card-title> 
+          <span [ngClass]="item.importancia == 1 ? 'fa fa-star' : ''"></span>
+          {{ item.title }} 
+        </mat-card-title>
+        <mat-card-content class="roboto">
+          <p> {{ item.descripcion }} </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="w-100-p" align="end">
+            <a *ngIf="item.url" [href]="item.url" class="mb-8" mat-stroked-button>ENLACE</a>
+          </div>
+          <div *ngIf="tipoUsuario == 1" class="w-100-p" align="end">
+            <mat-divider ></mat-divider>
+            <!-- <button matTooltip="Editar publicación" matTooltipPosition="above"
+            mat-icon-button><mat-icon>edit</mat-icon></button> -->
+            <button matTooltip="Borrar publicación" matTooltipPosition="above"
+            mat-icon-button (click)="deleteNovedad(item.id_novedad)" ><mat-icon>delete</mat-icon></button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+  
+      <mat-card *ngIf="item.tipo_novedad == 2"
+      [@animate]="{value:'*',params:{delay: 150*i+'ms',x:'-30px'}}">
+        <img mat-card-image [src]="item.imagen || 'assets/images/backgrounds/header-bg.png'">
+        <mat-card-subtitle> {{ item.fecha }} </mat-card-subtitle>
+        <mat-card-title>
+          <span [ngClass]="item.importancia == 1 ? 'fa fa-star' : ''"></span> 
+          {{ item.title }}
+        </mat-card-title>
+        <mat-card-content class="roboto">
+          <p>{{ item.descripcion }}</p>
+        </mat-card-content>
+        <mat-card-actions align="end" class="row">
+          <button class="mb-8" (click)="openModal(item)" mat-button>VER MAS</button>
+          <div *ngIf="tipoUsuario == 1" class="w-100-p">
+            <mat-divider ></mat-divider>
+            <!-- <button matTooltip="Editar publicación" matTooltipPosition="above"
+            mat-icon-button><mat-icon>edit</mat-icon></button> -->
+            <button matTooltip="Borrar publicación" matTooltipPosition="above"
+            mat-icon-button (click)="deleteNovedad(item.id_novedad)" ><mat-icon>delete</mat-icon></button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+  
+      <mat-card *ngIf="item.tipo_novedad == 3">
+        <mat-card-header>
+            <img mat-card-avatar src="assets/images/logos/fuse.svg" >
+            <mat-card-title> 
+              <span [ngClass]="item.importancia == 1 ? 'fa fa-star' : ''"></span>
+              {{ item.title }} 
+            </mat-card-title>
+            <mat-card-subtitle> {{ item.fecha }} </mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image [src]="item.imagen || 'assets/images/backgrounds/header-bg.png'">
+        <mat-card-content class="roboto">
+            <p> {{ item.descripcion }} </p>
+        </mat-card-content>
+        <mat-card-actions *ngIf="tipoUsuario == 1" align="end">
+          <mat-divider></mat-divider>
+          <!-- <button matTooltip="Editar publicación" matTooltipPosition="above"
+          mat-icon-button><mat-icon>edit</mat-icon></button> -->
+          <button matTooltip="Borrar publicación" matTooltipPosition="above"
+          mat-icon-button (click)="deleteNovedad(item.id_novedad)" ><mat-icon>delete</mat-icon></button>
+        </mat-card-actions>
+      </mat-card>
+  
+    </div>
+  </div>

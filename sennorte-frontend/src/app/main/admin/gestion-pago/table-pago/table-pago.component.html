@@ -1,0 +1,70 @@
+<div class="py-28">
+  <div class="row" fxHide.gt-xs>
+    <div class="col-md-12">
+      <mat-form-field appearance="fill">
+        <mat-label>Buscar usuario</mat-label>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar por documento o nombre de usuario">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="w-100-p pt-16 fuse-white-bg mat-elevation-z8">
+    <div class="col-md-12">
+      
+
+      <mat-form-field appearance="fill" fxFlex fxHide fxShow.gt-xs class="pb-0" fxLayoutAlign="end">
+        <mat-label>Buscar residente</mat-label>
+        <input matInput (keyup)="applyFilter($event.target.value)">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+    </div>
+  </div>
+  <div class="pagoTable mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="nombreResidente">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Residente </th>
+        <td class="roboto" mat-cell *matCellDef="let row" class=""> {{row.nombre1_residente +' '+ row.apellido_residente | titlecase}} </td>
+      </ng-container>
+
+      <!-- Progress Column -->
+      <ng-container matColumnDef="nombreAcudiente">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Acudiente </th>
+        <td class="roboto" mat-cell *matCellDef="let row"> {{row.nombre_acudiente | titlecase}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha del ultimo pago </th>
+        <td class="roboto" mat-cell *matCellDef="let row"> 
+            <mat-chip-list>
+                <mat-chip color="accent" selected (click)="ModalF(row)">Efectuar Pago</mat-chip>
+                <!-- <mat-chip color="Progress" selected (click)="ModalH(row)">Ver historial </mat-chip> -->
+            </mat-chip-list>  
+        </td>
+      </ng-container>
+
+      <!-- Color Column -->
+      <ng-container matColumnDef="accion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+        <td mat-cell *matCellDef="let row">
+            <!-- <div class="example-button-row">
+                <button mat-stroked-button color="primary">Primary</button>
+              </div> -->
+            <mat-chip-list>
+                <!-- <mat-chip color="accent" selected (click)="ModalF(row)">Efectuar Pago</mat-chip> -->
+                <mat-chip color="Progress" selected (click)="ModalH(row)">Ver historial de pagos </mat-chip>
+            </mat-chip-list>
+
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <mat-paginator style="background: transparent !important" [pageSizeOptions]="[10, 20]" showFirstLastButtons></mat-paginator>
+</div>

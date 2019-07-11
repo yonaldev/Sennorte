@@ -1,0 +1,157 @@
+<div class="page-layout blank flex" fusePerfectScrollbar>
+
+    <!-- TOOLBAR -->
+
+    <mat-toolbar [@animate]="{value:'*',params:{delay:'300ms',y:'-25px'}}" class="navbar" fxLayoutAlign="end center">
+        <button *ngIf="!loggedstatus" [routerLink]="'/auth/login'" [@animate]="{value:'*',params:{delay:'300ms',x:'25px'}}"
+            class="white-fg" color="primary" mat-raised-button>
+            Iniciar sesión
+        </button>
+        <button *ngIf="loggedstatus" mat-raised-button [matMenuTriggerFor]="menu" class="roboto white-fg" color="primary"
+            [@animate]="{value:'*',params:{delay:'300ms',x:'25px'}}">
+            {{ name | titlecase }} &nbsp;<mat-icon>person</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button [routerLink]="'/home'" class="roboto" mat-menu-item>
+                <mat-icon>account_circle</mat-icon>
+                <span>Administración</span>
+            </button>
+            <button class="roboto" mat-menu-item (click)="logout($event)">
+                <mat-icon>exit_to_app</mat-icon>
+                <span>Cerrar sesión</span>
+            </button>
+
+        </mat-menu>
+    </mat-toolbar>
+
+    <!-- / TOOLBAR -->
+
+    <!-- MAIN -->
+
+    <div class="container">
+        <!-- HEADER -->
+        <section>
+            <div class="wave" [@slideInBottom]></div>
+            <div class="banner w-100-p" fxLayout="column" fxLayoutAlign="center center">
+                <span class="mat-display-3 banner-text-subtitle">Hogar gerontológico<br>
+                    <span class="mat-display-4 banner-text-title">Sendero del Norte</span><br>
+                    <span class="mat-headline slogan w-100-p" fxLayoutAlign="end">Atención humanitaria con calor de
+                        hogar</span>
+                </span>
+
+            </div>
+            <div class="layer"></div>
+            
+                <div class="footer w-100-p">
+                        <div class="footer-line" fxLayout="row" fxLayoutAlign="end center">
+                            Hogar gerontológico sendero del norte&nbsp;<i class="far fa-copyright white-fg"></i>&nbsp;2019
+                        </div>
+                </div>
+        </section>
+        <!-- / HEADER -->
+
+        <!-- <div class="content p-16 white-bg pb-44 pt-80">
+            CONTENT
+            <span class="mat-display-2 cursiva quienes-title">¿Quiénes somos?</span>
+            <div class="quienes mb-28" fxLayout="row wrap">
+                <p class="mat-subheading-2 mt-24" fxFlex="50">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam iste quaerat pariatur saepe
+                    vitae cumque molestiae maxime ullam explicabo. Nulla sint consectetur nihil ratione impedit id
+                    blanditiis vel exercitationem sed?
+                </p>
+                <div fxLayout="column" fxLayoutAlign="center center" fxFlex="50">
+                    <img class="w-200 img-presentation" src="assets/images/backgrounds/pareja-viejos-2.svg" alt="">
+                    <span class="circle"></span>
+                </div>
+            </div>
+
+            <span class="mat-display-2 mb-0 cursiva objetivo-title w-100-p" fxLayoutAlign="end center">Nuestro objetivo
+                es...</span>
+            <div class="objetivo mt-24" fxLayout="row wrap">
+                <div fxLayout="column" fxLayoutAlign="center center" fxFlex="50">
+                    <img class="w-200 img-presentation" src="assets/images/backgrounds/pareja-viejos-1.svg" alt="">
+                    <span class="circle"></span>
+                </div>
+                <p class="mat-subheading-2" fxFlex="50">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam iste quaerat pariatur saepe
+                    vitae cumque molestiae maxime ullam explicabo. Nulla sint consectetur nihil ratione impedit id
+                    blanditiis vel exercitationem sed?
+                </p>
+            </div>
+
+        </div>
+
+        <div class="banner-2" fxLayoutAlign="end center">
+
+            <blockquote class="reverse white-fg" style="z-index: 2">
+                <p>
+                    Las arrugas del espíritu nos hacen más viejos que las de la cara.
+                </p>
+                <footer>
+                    Michel de Montaigne
+                </footer>
+            </blockquote>
+            <div class="layer-2"></div>
+            <div class="bg-2"></div>
+
+        </div>
+
+        <div class="content py-16 pt-48 white-bg" style="z-index: 1">
+            <span class="mat-display-2 w-100-p eventos-title cursiva">Proximos eventos</span>
+            <div class="eventos" fxLayout="row wrap" fxLayoutAlign="center start" fusePerfectScrollbar>
+                <span class="mat-title-2" *ngIf="eventos?.length < 1">No hay eventos próximos</span>
+                <div *ngFor="let evento of eventos" class="example-1 card mb-24" fxFlex="33" fxFlex.gt-xs="50" fxFlex.xs="100">
+
+                    <div class="wrapper" [ngStyle]="{'background':'url('+( evento.imagen ? evento.imagen : '')+') 20% 1% / cover no-repeat'}">
+                        <div class="date">
+                            <span class="day">{{ evento.fecha | date:'dd' }}</span>
+                            <span class="month">{{ evento.fecha | date:'MMM' }}</span>
+                            <span class="year">{{ evento.fecha | date:'yyyy' }}</span>
+                        </div>
+                        <div class="data">
+                            <div class="content">
+                                <span class="author">Adminitración</span>
+                                <h1 class="title"><a href="#">{{ evento.titulo_evento }}</a></h1>
+                                <p class="text"> {{ evento.descripcion_evento }}</p>
+                                <label for="show-menu" class="menu-button" *ngIf="false"><span></span></label>
+                            </div>
+                            <input type="checkbox" checked id="show-menu" />
+                            <ul class="menu-content">
+                                <li>
+                                    <a class="fa fa-clock"></a>
+                                </li>
+                                <div class="w-100-p">
+                                    Hora {{ evento.hora }}{{ evento.minuto > 0 ? (evento.minuto < 10 ? ':0'+evento.minuto : ':'+evento.minuto) : '' }} {{ evento.horario }}
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            / CONTENT
+        </div>
+
+        <div class="footer w-100-p">
+            <div class="footer-content" fxLayout="row wrap" fxLayoutAlign="end center">
+                
+                <div class="character" fxLayout="column" fxFlex="10" fxLayoutAlign="center center">
+                    <img class="img-presentation" src="../../../assets/images/backgrounds/character.svg" alt="">
+                    <span class="circle"></span>
+                </div>
+
+            </div>
+
+            <div class="footer-line" fxLayout="row" fxLayoutAlign="end center">
+                Hogar gerontológico sendero del norte&nbsp;<i class="far fa-copyright white-fg"></i>&nbsp;2019
+            </div>
+            
+            <div class="layer-3"></div>
+            <div class="bg-3"></div>
+        </div> -->
+
+    </div>
+
+    <!-- / MAIN -->
+
+</div>

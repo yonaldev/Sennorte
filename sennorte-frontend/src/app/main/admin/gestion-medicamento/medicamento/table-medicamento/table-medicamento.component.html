@@ -1,0 +1,88 @@
+<div class="py-28">
+    <div class="row" fxHide.gt-xs>
+      <div class="col-md-12">
+        <mat-form-field appearance="fill">
+          <mat-label>Buscar medicamentos</mat-label>
+          <input matInput (keyup)="applyFilter($event.target.value)">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field> 
+      </div>
+    </div>
+    
+    <div class="w-100-p pt-16 mat-elevation-z8">
+      <div class="col-md-12">
+        <mat-slide-toggle [matTooltip]="isChecked ? 'Ver medicamentos activos' : 'Ver medicamentos inhabilitados'" 
+        [(ngModel)]="isChecked" color="warn" (change)="toggle($event)" ></mat-slide-toggle>
+        
+        <mat-form-field appearance="fill" fxFlex fxHide fxShow.gt-xs class="pb-0" fxLayoutAlign="end">
+          <mat-label>Buscar medicamentos</mat-label>
+          <input matInput (keyup)="applyFilter($event.target.value)">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field> 
+  
+        <button *ngIf="rol === '1' || rol === '5'"
+                matTooltip="Registrar medicamento" 
+                color="primary" 
+                (click)="openDialog()" 
+                class="ml-8" 
+                mat-fab>
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="mat-elevation-z8">
+        <table mat-table class="table-medicamento" [dataSource]="dataSource" matSort>
+        
+            <!-- Nombre Column -->
+            <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                <td class="roboto" mat-cell *matCellDef="let row"> {{row.nombre_medicamento}} </td>
+            </ng-container>
+        
+            <!-- Dosis Column -->
+            <ng-container matColumnDef="dosis">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Dosis </th>
+                <td class="roboto" mat-cell *matCellDef="let row"> {{row.dosis + ' ' + row.unidad_medida }} </td>
+            </ng-container>
+        
+            <!-- Tipo de aplicacion Column -->
+            <ng-container matColumnDef="tipoAplicacion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo de aplicación </th>
+                <td class="roboto" mat-cell *matCellDef="let row"> {{row.nombre_aplicacion}} </td>
+            </ng-container>
+        
+            <!-- Acciones Column -->
+            <!-- Esta columna solo sera visible cuando esten loggeados los roles administrador y gerente -->
+            <ng-container *ngIf="rol === '1' || rol === '5'" matColumnDef="accion">
+                <th mat-header-cell 
+                    *matHeaderCellDef
+                    class="w-100" 
+                    mat-sort-header> 
+                    Acciones 
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="button-row" *ngIf="row.estado_medicamento == 1" fxLayoutAlign="end">
+                        <button mat-mini-fab color="accent" (click)="openDialogEditar(row)"
+                        matTooltip="Editar "
+                        matTooltipPosition="left"><mat-icon>edit</mat-icon></button>
+                        <button mat-mini-fab color="warn"
+                        matTooltip="Inhabilitar"
+                        matTooltipPosition="left"(click)="habilitarMedicamento(row.nombre_medicamento, 0, row.id_medicamento)" >
+                        <mat-icon>delete</mat-icon></button>
+                    </div>
+                
+                    <div class="button-row" *ngIf="row.estado_medicamento == 0" fxLayoutAlign="end">
+                        <button mat-mini-fab class="green-A700-bg"
+                        matTooltip="Habilitar"
+                        matTooltipPosition="left" (click)="habilitarMedicamento(row.nombre_medicamento, 1, row.id_medicamento)"
+                        ><mat-icon>cached</mat-icon></button>
+                    </div>
+                </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+    <mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons></mat-paginator>
+</div>

@@ -1,0 +1,166 @@
+<form [formGroup]="registroFormula">
+  <h1 matDialogTitle>Editar fórmula No. {{ data }}</h1>
+
+  <mat-dialog-content class="px-24 py-12">
+
+    <!-- formulario cabecera de formula -->
+    <div class="row">
+      
+      <div class="col-md-12 mb-24">
+        <span *ngIf="busqueda" [@animate]="{value:'*',params:{delay:'200ms',x:'-25px'}}">
+          <b>Residente asociado a la fórmula: {{ formula.residente_id_residente }}</b><br>
+            <mat-chip-list>
+              <mat-chip color="primary" 
+              [@animate]="{value:'*',params:{duration:'400ms',delay:'150ms',x:'-25px'}}"
+              selected>
+                {{ mensaje | titlecase }}
+              </mat-chip>
+            </mat-chip-list>
+        </span>
+      </div>
+      
+      <mat-form-field class="col-md-4">
+        <mat-label>IPS</mat-label>
+        <input matInput [(ngModel)]="formula.ips" id="ips" formControlName="ips" required>
+        <span class="fa fa-hospital primary-400-fg" matPrefix>&nbsp;&nbsp;</span>
+        <mat-hint>Hospital del cual fue remitida la fórmula</mat-hint>
+        <mat-error *ngIf="ips.invalid">
+          {{ getErrorMessageIPS() }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-4">
+        <mat-label>Fecha de la fórmula</mat-label>
+        <input  matInput [(ngModel)]="formula.fecha_formula"
+                formControlName="fecha" 
+                [matDatepicker]="inicio" 
+                (focus)="inicio.open()" 
+                [max]="maxDate"
+                required>
+        <mat-datepicker-toggle matSuffix [for]="inicio"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #inicio></mat-datepicker>
+        <span class="fa fa-hourglass primary-400-fg" matPrefix>&nbsp;&nbsp;</span>
+        <mat-hint>Fecha de elaboración de la fórmula</mat-hint>
+        <mat-error *ngIf="fecha.invalid">
+          {{ getErrorMessageFecha() }}
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+    <br>
+
+    <div class="w-100-p" fxLayout="row" fxLayoutAlign="end center">
+      <button mat-stroked-button (click)="openAddMedicamento()">Añadir medicamento</button>
+    </div>
+
+    <br>
+
+    <div class="mat-elevation-z8">
+      <!-- Tabla medicamentos existentes en la formula  -->
+
+      <div class="w-100-p p-8 h-25 primary-bg" fxLayoutAlign="center center">
+        <h3 class="primary-50-fg">Medicamentos asociados a la fórmula</h3>
+      </div>
+      <table mat-table class="w-100-p" [dataSource]="datasource">
+        <!-- Referencia Column -->
+        <ng-container matColumnDef="medicamento"> 
+            <th mat-header-cell *matHeaderCellDef> Medicamento </th>
+            <td class="roboto" mat-cell *matCellDef="let row"> 
+              {{ row.nombre_medicamento + ' ' + row.dosis + row.unidad_medida }} 
+            </td>
+        </ng-container>
+    
+        <!-- Residente Column -->
+        <ng-container matColumnDef="especificacion">
+            <th mat-header-cell *matHeaderCellDef> Especificaciones </th>
+            <td class="roboto" mat-cell *matCellDef="let row"> 
+                {{ row.dosis_medicamento > 1 ?  row.dosis_medicamento + ' unidades ' : row.dosis_medicamento + ' unidad ' }} 
+                {{ row.lapso > 1 ? ' cada ' + row.lapso + ' horas. ' : ' cada hora. ' }}
+                {{ row.dias > 1 ? 'Durante ' + row.dias + ' dias' : 'Durante un dia' }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="accion">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td class="w-100" mat-cell *matCellDef="let row">
+            <div fxLayoutAlign="end">
+              <button mat-mini-fab
+                    matTooltip="Editar medicamento"
+                    matTooltipPosition="left"
+                    (click)="openDialogEditarMedicamento(row)">
+              <mat-icon>edit</mat-icon>
+              </button>
+              <button color="warn" 
+                      class="ml-4"
+                      matTooltip="Eliminar medicamento"
+                      mat-mini-fab>
+                <mat-icon>clear</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <!-- Tabla medicamentos añadidos a la formula medica -->
+
+      <div class="w-100-p" *ngIf="medAdd.data.length > 0" [@animate]="{value:'*',params:{duration:'400ms',delay:'150ms',x:'-25px'}}">
+        <div class="w-100-p p-8 h-25 light-green-700-bg" fxLayoutAlign="center center">
+          <h3 class="light-green-50-fg">Medicamentos añadidos a la fórmula</h3>
+        </div>
+        <table mat-table class="w-100-p" [dataSource]="medAdd">
+          <!-- Referencia Column -->
+          <ng-container matColumnDef="medicamento"> 
+              <th mat-header-cell *matHeaderCellDef> Medicamento </th>
+              <td class="roboto" mat-cell *matCellDef="let row"> 
+                {{ row.informacion_medicamento }} 
+              </td>
+          </ng-container>
+      
+          <!-- Residente Column -->
+          <ng-container matColumnDef="especificacion">
+              <th mat-header-cell *matHeaderCellDef> Especificaciones </th>
+              <td class="roboto" mat-cell *matCellDef="let row"> 
+                  {{ row.dosis_medicamento > 1 ?  row.dosis_medicamento + ' unidades ' : row.dosis_medicamento + ' unidad ' }} 
+                  {{ row.lapso > 1 ? ' cada ' + row.lapso + ' horas. ' : ' cada hora. ' }}
+                  {{ row.dias > 1 ? 'Durante ' + row.dias + ' dias' : 'Durante un dia' }}
+              </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="accion">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td class="w-100" mat-cell *matCellDef="let row; let i = index">
+              <div fxLayoutAlign="end">
+                <button mat-mini-fab
+                      matTooltip="Editar medicamento"
+                      matTooltipPosition="left"
+                      (click)="openDialogEditarMedicamento(row)">
+                <mat-icon>edit</mat-icon>
+                </button>
+                <button color="warn" 
+                        class="ml-4"
+                        matTooltip="Quitar medicamento"
+                        matTooltipPosition="left"
+                        (click)="deleteItem(i)"
+                        mat-mini-fab>
+                  <mat-icon>clear</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions fxLayoutAlign="end center">
+      <button mat-button matDialogClose>Cerrar</button>
+      <button color="warn" mat-raised-button>Guardar</button>
+      
+  </mat-dialog-actions>
+</form>

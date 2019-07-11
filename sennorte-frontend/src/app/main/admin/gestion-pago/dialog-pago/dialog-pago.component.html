@@ -1,0 +1,29 @@
+<h2 mat-dialog-title><b>Informacion de pago</b></h2>
+
+<form [formGroup]="formP" (ngSubmit)="onSubmit()" novalidate>
+  <!-- *************PANEL INFORME -->
+  <mat-expansion-panel [expanded]="true">
+
+    <div class="example-container">
+
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Valor a Pagar" formControlName="valor_pago" required>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <input matInput #message maxlength="256" placeholder="Oservaciones" required formControlName="observacion">
+        <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+      </mat-form-field>
+
+    </div>
+
+    <div mat-dialog-actions align="end">
+      <button mat-raised-button color="primary" class="btn-new"> Pagar </button>
+    </div>
+
+  </mat-expansion-panel>
+</form>
+
+<div mat-dialog-actions align="end left">
+  <button mat-raised-button (click)="close()" color="warn" class="btn-new"> Cancelar </button>
+</div>

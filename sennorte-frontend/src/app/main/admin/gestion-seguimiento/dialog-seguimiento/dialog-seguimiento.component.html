@@ -1,0 +1,37 @@
+<form [formGroup]="form1" (ngSubmit)="onSubmit()"   novalidate>
+
+<h2 mat-dialog-title><b>Registrar Informe</b></h2>
+
+      <!-- *************PANEL INFORME -->
+    <mat-expansion-panel [expanded]="true">
+
+        <mat-expansion-panel-header>
+          Informe
+        </mat-expansion-panel-header>
+        
+        <div class="example-container">
+          <mat-form-field class="col-md-12">
+            <textarea matInput 
+            placeholder="Escriba el informe diario del residente"  formControlName="informe"  
+            ></textarea>
+
+            <mat-error *ngIf="form1.controls['informe'].errors?.required">
+                  Este campo es requerido
+            </mat-error>
+            <mat-error *ngIf="form1.controls['informe'].errors?.minlength">
+                  Mínimo 20 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+            
+        <div mat-dialog-actions align="end">
+          <button mat-raised-button color="primary" class="btn-new" [disabled]="form1.invalid"> Guardar </button>
+        </div>          
+
+    </mat-expansion-panel>
+  </form>
+
+    <div mat-dialog-actions align="end left">
+      <button mat-raised-button (click)="close()" color="warn" class="btn-new"> Cancelar </button>
+    </div>
+  

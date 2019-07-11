@@ -1,0 +1,17 @@
+table {
+    width: 100%;
+  } 
+  
+  .seguimientoTable{
+    min-height: 100px;
+    overflow: auto;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  mat-paginator{
+    background: transparent !important;
+  }

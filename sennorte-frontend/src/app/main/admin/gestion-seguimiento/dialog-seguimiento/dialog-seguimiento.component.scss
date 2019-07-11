@@ -1,0 +1,54 @@
+.footer{
+    width: 100%;
+    text-align: right;
+}
+
+.example-headers-align .mat-expansion-panel-header-title, 
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+  font-family: 'Roboto';
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+p {
+    font-family: 'Roboto';
+}
+
+mat-form-field {
+    font-family: 'Roboto';
+}
+
+mat-expansion-panel {
+    font-family: 'Roboto' !important;
+    border: solid #ddd 1px;
+    border-radius: 5px;
+}
+
+.info-label {
+    font-size: .7em;
+    margin: 0 !important;
+    color: rgb(179, 179, 179);
+}
+
+.example-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .example-container > * {
+    width: 100%;
+  }
+
+  .ng-valid.ng-toched:not(form) {
+       border: 1px solid red;
+  }
+  table {
+    width: 100%;
+  }
+
+  
+  

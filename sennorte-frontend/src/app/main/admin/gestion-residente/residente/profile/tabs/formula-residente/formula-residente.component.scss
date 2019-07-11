@@ -1,0 +1,51 @@
+.card-formula {
+  border-radius: 10px;
+  transition: .2s;
+  cursor: pointer;
+
+  mat-card-title {
+    font-size: 20px;
+  }
+
+  mat-card {
+    border-radius: 10px;
+  }
+
+  mat-card-footer {
+    border-radius: 0 0 10px 10px;
+  }
+
+}
+
+.card-formula :hover {
+  transform: scale(1.1);
+  transition: .2s;
+  z-index: 2;
+
+  mat-card {
+    border-radius: 10px;
+    transform: scale(1);
+  }
+
+  mat-card-title {
+    transform: scale(1);
+  }
+
+  mat-card-subtitle {
+    transform: scale(1);
+  }
+
+  h3 {
+    transform: scale(1);
+  }
+
+  mat-card-footer {
+    border-radius: 0 0 10px 10px;
+    transform: scale(1);
+  }
+
+}
+
+.no-search {
+  color: rgb(129, 127, 127);
+}

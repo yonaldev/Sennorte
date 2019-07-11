@@ -1,0 +1,120 @@
+<div class="page-layout carded left-sidebar">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- SIDEBAR -->
+  <fuse-sidebar class="sidebar" name="carded-left-sidebar-1" position="left" lockedOpen="gt-md">
+
+    <!-- SIDEBAR HEADER -->
+    <div class="header p-24 mat-accent-bg" fxLayoutAlign="center center">
+      <span class="mat-title" fxHide fxShow.gt-xs>Menú</span>
+    </div>
+    <!-- / SIDEBAR HEADER -->
+
+    <!-- SIDEBAR CONTENT -->
+    <div class="content p-24">
+
+      <mat-list dense>
+        <span class="mat-subheading-2 primary-200-fg">Acciones</span>
+
+        <mat-list-item class="m-8">
+          <a class="w-100-p mat-subheading-1 btn" (click)="vista = true">Registrar</a>
+        </mat-list-item>
+
+        <mat-list-item class="m-8">
+          <a class="w-100-p mat-subheading-1 btn" (click)="vista = false">Ver todo</a>
+        </mat-list-item>
+      </mat-list>
+
+    </div>
+    <!-- / SIDEBAR CONTENT -->
+
+  </fuse-sidebar>
+  <!-- / SIDEBAR -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- CONTENT HEADER -->
+    <div class="header mat-accent-bg p-24">
+      <span class="m-0 mat-display-1">Gestión de camas y habitaciones</span>
+    </div>
+    <!-- / CONTENT HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card mat-white-bg">
+
+      <!-- CONTENT TOOLBAR -->
+      <div class="toolbar px-24 py-8">
+
+        <button mat-icon-button class="sidebar-toggle" fxHide.gt-md (click)="toggleSidebar('carded-left-sidebar-1')">
+          <mat-icon>menu</mat-icon>
+        </button>
+
+      </div>
+      <!-- / CONTENT TOOLBAR -->
+
+      <!-- CONTENT -->
+      <div class="content p-24" fxLayout="row wrap">
+
+        <!-- FORMULARIO DE REGISTRO -->
+        <div fxLayout="row wrap" fxFlex="100" *ngIf="vista" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          <div fxLayout="column wrap" fxFlex="49" fxFlex.xs="100" fxFlex.sm="100" class="p-16">
+            <form fxLayout="column" (ngSubmit)="sendHabitacion()" novalidate>
+              <span class="primary-200-fg mat-subheading-2" fxLayout="column" fxFlex="100">Registro de habitaciones</span>
+              <mat-form-field fxLayout="column" fxFlex="100">
+                <mat-label>Número de habitación</mat-label>
+                <input matInput name="habitacion" [(ngModel)]="habitacion.habitacion" required>
+                <mat-error>
+                  Campo requerido
+                </mat-error>
+              </mat-form-field>
+              <button color="primary" mat-raised-button>Guardar</button>
+            </form>
+          </div>
+          <div fxLayout="column wrap" fxFlex="49" fxFlex.xs="100" fxFlex.sm="100" class="p-16">
+            <form fxLayout="column" (ngSubmit)="sendCama()" novalidate>
+              <span class="primary-200-fg pl-24 mat-subheading-2" fxLayout="row" fxFlex="100">Registro de camas</span>
+              <mat-form-field fxLayout="column" fxFlex="100">
+                <mat-label>Número de cama</mat-label>
+                <input matInput name="cama" [(ngModel)]="cama.cama" required>
+                <mat-error>
+                  Campo requerido
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="mb-8" fxLayout="column" fxFlex="100">
+                <mat-label>Habitación</mat-label>
+                <mat-select name="habitacion" [(ngModel)]="cama.habitacion" required>
+                  <mat-option *ngFor="let item of habitaciones" [value]="item.id_habitacion">
+                    {{ item.habitacion }}
+                  </mat-option>
+                </mat-select>
+                <mat-error>
+                  Campo requerido
+                </mat-error>
+                <mat-hint>Habitación en la cual esta la cama</mat-hint>
+              </mat-form-field>
+              <button color="primary" mat-raised-button>Guardar</button>
+            </form>
+          </div>
+        </div>
+        <!-- / FORMULARIO DE REGISTRO -->
+
+        <!-- TABLA DE CONTENIDO -->
+        <div *ngIf="!vista" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          Tabla
+        </div>
+        <!-- / TABLA DE CONTENIDO -->
+
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

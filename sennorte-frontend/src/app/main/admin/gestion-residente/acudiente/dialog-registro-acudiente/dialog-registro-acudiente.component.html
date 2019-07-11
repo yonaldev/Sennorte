@@ -1,0 +1,81 @@
+<h1 matDialogTitle>Registrar acudiente</h1>
+<form [formGroup]="RegistrarAcudiente" (ngSubmit)="onSubmit()">
+  <mat-dialog-content class="row px-20">
+    <mat-form-field class="col-md-3">
+      <mat-label>Número de documento</mat-label>
+      <input matInput formControlName="documento" [(ngModel)]="form.id_acudiente" required>
+      <span matPrefix class="fa fa-address-card primary-400-fg">&nbsp;&nbsp;</span>
+      <mat-error *ngIf="documentoAcudiente.invalid">
+        {{ getErrorMessageDocumentoAcudiente() }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-5">
+      <mat-label>Nombre completo</mat-label>
+      <input matInput formControlName="nombre" [(ngModel)]="form.nombre_acudiente" required>
+      <span matPrefix class="fa fa-user-tie primary-400-fg">&nbsp;&nbsp;</span>
+      <mat-hint>Nombres y apellidos</mat-hint>
+      <mat-error>
+        Campo requerido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-4">
+      <mat-label>Dirección de residencia</mat-label>
+      <input matInput formControlName="direccion" [(ngModel)]="form.direccion_acudiente" required>
+      <span matPrefix class="fas fa-map-marker-alt primary-400-fg">&nbsp;&nbsp;</span>
+      <mat-error>
+        Campo requerido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-3">
+      <mat-label>Primer teléfono</mat-label>
+      <input matInput formControlName="primerTelefono" [(ngModel)]="form.telefono_1" required>
+      <span matPrefix class="fa fa-phone primary-400-fg">1&nbsp;&nbsp;</span>
+      <mat-error *ngIf="telefono1.invalid">
+        {{ getErrorMessagePrimerTelefono() }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-3">
+      <mat-label>Segundo teléfono</mat-label>
+      <input matInput formControlName="segundoTelefono" [(ngModel)]="form.telefono_2">
+      <span matPrefix class="fa fa-phone primary-400-fg">2&nbsp;&nbsp;</span>
+      <mat-error *ngIf="telefono2.invalid">
+        {{ getErrorMessageSegundoTelefono() }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-3">
+      <mat-label>Fecha de nacimiento</mat-label>
+      <input matInput formControlName="fecha_nacimiento" [matDatepicker]="nacimiento" (focus)="nacimiento.open()"
+        [(ngModel)]="form.fecha_nacimiento_acudiente" required>
+      <span matPrefix class="fa fa-birthday-cake  primary-400-fg">&nbsp;&nbsp;</span>
+      <mat-datepicker-toggle matSuffix [for]="nacimiento"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #nacimiento></mat-datepicker>
+      <mat-hint>El acudiente debe ser mayor de edad</mat-hint>
+      <mat-error *ngIf="nacimientoAcudiente.invalid">
+        {{getErrorMessageNacimientoAcudiente()}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-3">
+      <mat-label>Estado civil</mat-label>
+      <mat-select class="roboto" formControlName="estado_civil" [(ngModel)]="form.id_estado_civil" required>
+        <mat-option *ngFor="let items of estado_civil" [value]="items.id_estado_civil">
+          {{ items.estado_civil }}
+        </mat-option>
+      </mat-select>
+      <span matPrefix class="fa fa-ring primary-400-fg">&nbsp;&nbsp;</span>
+      <mat-error>
+        Campo requerido
+      </mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <a mat-button mat-dialog-close (click)="close()">Cancelar</a>
+    <button mat-raised-button color="warn" [disabled]="RegistrarAcudiente.invalid">Guardar</button>
+  </div>
+</form>

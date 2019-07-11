@@ -1,0 +1,87 @@
+<form [formGroup]="registrarUsuario" (ngSubmit)="onSubmit()" novalidate>
+  <h2 mat-dialog-title><b>Registrar usuario</b></h2>
+  <mat-dialog-content class="roboto h-380 px-40">
+    <div class="h-4"></div>
+    <h4 class="info-label">Información basica de usuario</h4>
+    <div class="row">
+
+      <mat-form-field class="col-md-12">
+        <mat-label>Documento de identidad</mat-label>
+        <input matInput type="text" pattern="[0-9]*" id="documentUsuario" 
+        [(ngModel)]="form.document" name="documentUsuario" required 
+        #documento minlength="8" formControlName="documentUsuario">
+        <span matPrefix class="fa fa-address-card primary-400-fg">&nbsp;&nbsp;</span>
+        <mat-hint>Minimo 8 caracteres</mat-hint>
+        <mat-error *ngIf="documentUsuario.invalid">
+          {{ getErrorMessageDocument() }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-6">
+        <mat-label>Nombre</mat-label>
+        <input matInput type="text" id="name" name="name" 
+        [(ngModel)]="form.name" name="nameUsuario" required
+        formControlName="nameUsuario">
+        <span matPrefix class="fa fa-user-md primary-400-fg">&nbsp;&nbsp;</span>
+        <mat-error *ngIf="nameUsuario.invalid">
+          {{ getErrorMessageName() }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-6">
+        <mat-label>Apellido</mat-label>
+        <input matInput type="text" id="lastname" name="lastname" 
+        [(ngModel)]="form.lastname" name="lastnameUsuario" required
+        formControlName="lastnameUsuario">
+        <mat-error *ngIf="lastnameUsuario.invalid">
+          {{ getErrorMessageLastname() }}
+        </mat-error>
+      </mat-form-field>
+      
+    </div>
+    <br>
+    <h4 class="info-label">Accesos de cuenta</h4>
+
+    <div class="row">
+
+      <mat-form-field class="col-md-7">
+        <mat-label>Correo electronico</mat-label>
+        <input matInput type="email" id="emailUsuario" name="emailUsuario" 
+        [(ngModel)]="form.email" name="emailUsuario" required
+        formControlName="emailUsuario"> 
+        <span matPrefix class="fa fa-envelope primary-400-fg">&nbsp;&nbsp;</span>
+        <mat-error *ngIf="emailUsuario.invalid">
+          {{ getErrorMessageEmail() }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-5">
+        <mat-label>Contraseña</mat-label>
+        <input matInput [type]="hide ? 'text' : 'password'" id="password" name="password" 
+        [(ngModel)]="form.password" required
+        formControlName="passwordUsuario">
+        <span matPrefix class="fa fa-key primary-400-fg">&nbsp;&nbsp;</span>
+        <mat-icon matSuffix (click)="hide = !hide" class="pointer primary-400-fg">{{ hide ? 'visibility_off' : 'visibility'  }}</mat-icon>
+        <mat-hint>Minimo 8 caracteres</mat-hint>
+        <mat-error *ngIf="passwordUsuario.invalid">
+          {{ getErrorMessagePassword() }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-4">
+        <mat-select placeholder="Rol" [(ngModel)]="form.rol"
+        formControlName="rolUsuario" required>
+          <mat-option *ngFor="let rol of roles" [value]="rol.id_rol"> {{ rol.nombre_rol | titlecase }} </mat-option>
+        </mat-select>
+        <mat-error *ngIf="rolUsuario.invalid">
+          {{ getErrorMessageRol() }}
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+  </mat-dialog-content>
+  <div mat-dialog-actions align="end" class="border-top">
+    <a mat-button (click)="close()" class="btn-new">Cancelar </a>
+    <button mat-raised-button color="warn" type="submit" [disabled]="!registrarUsuario.valid"> Registrar </button>
+  </div>
+</form>

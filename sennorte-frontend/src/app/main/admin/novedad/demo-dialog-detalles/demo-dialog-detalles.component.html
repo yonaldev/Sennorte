@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>{{ data.title || 'Titulo'}}</h1>
+<mat-dialog-content class="row p-16 roboto">
+  <div class="col-md-12">{{ data.detalles || 'Información detallada' }}</div>
+  <div class="col-md-6 mt-20">
+    <img [src]="data.urlImagen" *ngIf="data.urlImagen"
+    class="mat-elevation-z8 border-rounded">
+  </div>
+  
+</mat-dialog-content>
+<div mat-dialog-actions align="end">
+  <a mat-raised-button color="primary" (click)="closeModal()">Aceptar</a>
+</div>

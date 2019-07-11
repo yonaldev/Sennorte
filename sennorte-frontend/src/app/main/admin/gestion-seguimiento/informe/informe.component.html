@@ -1,0 +1,18 @@
+<div class="seguimientoTable mat-elevation-z8">
+    <div class="example-container mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
+      
+          <!-- Position Column -->
+          <ng-container matColumnDef="informe">
+            <th mat-header-cell *matHeaderCellDef> Informe </th>
+            <td mat-cell *matCellDef="let element"> {{element.informe}} </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+</div>
+    <div mat-dialog-actions align="end">
+      <button mat-raised-button (click)="close()" class="btn-new" color="warn"> Cerrar </button> 
+  </div>

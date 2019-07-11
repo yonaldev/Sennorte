@@ -1,0 +1,140 @@
+<div id="about" class="p-24" fxLayout="row wrap">
+
+    <div class="about-content" fxLayout="column" fxFlex="100" fxFlex.gt-sm="50" fxFlex.gt-md="65">
+
+        <div class="profile-box info-box general" fxLayout="column">
+
+            <header class="mat-accent-bg">
+                <div class="title">Información General</div>
+            </header>
+
+            <div class="content">
+                <div class="info-line">
+                    <div class="title">Número de documento</div>
+                    <div class="info">{{ info?.id_residente }}</div>
+                </div>
+
+                <div class="info-line">
+                    <div class="title">Género</div>
+                    <div class="info">{{ info?.sexo | titlecase }}</div>
+                </div>
+
+                <div class="info-line">
+                    <div class="title">Fecha de nacimiento</div>
+                    <div class="info">{{ info?.fecha_nacimiento_residente | date:'longDate' }}</div>
+                </div>
+                <div class="info-line">
+                    <div class="title">Estado civil</div>
+                    <div class="info">{{ info?.estado_civil | titlecase}}</div>
+                </div>
+
+                <div class="info-line">
+                    <div class="title">Peso</div>
+                    <div class="info">{{ info?.peso }} Kilogramos</div>
+                </div>
+
+                <div class="info-line">
+                    <div class="title">EPS</div>
+                    <div class="info">{{info?.nombre_eps}}</div>
+                    <div class="info">Télefono: {{info?.telefono_eps }}</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="profile-box info-box work" fxLayout="column">
+
+            <header class="mat-accent-bg">
+                <div class="title">Seguimiento inicial</div>
+            </header>
+
+            <div class="content">
+                <div *ngIf="valoracion.length === 0" class="w-100-p" fxLayout="column" fxLayoutAlign="center center">
+                    <h3>No se ha registrado la valoración inicial de este residente</h3>
+                    <button mat-raised-button color="primary" routerLink="/seguimiento/valoracion-inicial">Registrar valoración</button>
+                </div>
+
+                <div *ngIf="valoracion.length > 0">
+                    <div class="info-line">
+                        <div class="title">Antecedentes personales</div>
+                        <div class="info">{{valoracion[0].antecedente_residente}}</div>
+                    </div>
+
+                    <div class="info-line">
+                        <div class="title">Antecedentes familiares</div>
+                        <div class="info">{{valoracion[0].antecedente_familiar}}</div>
+                    </div>
+
+                    <div class="info-line">
+                        <div class="title">Antecedentes quirúrgicos</div>
+                        <div class="info">{{valoracion[0].antecedente_quirurgico}}</div>
+                    </div>
+
+                    <div class="info-line">
+                        <div class="title">Alergias</div>
+                        <div class="info">{{valoracion[0].informe_alergia}}</div>
+                    </div>
+
+                    <div class="info-line">
+                        <div class="title">Valoración cefalocaudal</div>
+                        <div class="info">{{valoracion[0].valoracion_cefalocaudal}}</div>
+                    </div>
+
+                    <div class="info-line">
+                        <div class="title">Especialidades</div>
+                        <div class="info">{{valoracion[0].especialidades}}</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="about-sidebar" fxLayout="column" fxFlex="100" fxFlex.gt-sm="50" fxFlex.gt-md="35">
+
+        <div class="profile-box info-box contact" fxLayout="column">
+
+            <header class="mat-accent-bg">
+                <div class="title">Información del acudiente</div>
+            </header>
+
+            <div class="content">
+                <div class="info-line">
+                    <div class="title">Nombre completo</div>
+                    <div class="info">{{ info?.nombre_acudiente | titlecase}}</div>
+                </div>
+                <div class="info-line">
+                    <div class="title">Dirección de residencia</div>
+                    <div class="info">{{ info?.direccion_acudiente | titlecase }}</div>
+                </div>
+                <div class="info-line">
+                    <div class="title">Teléfono 1.</div>
+                    <div class="info"> {{ info?.telefono_1 }} </div>
+                </div>
+                <div class="info-line">
+                    <div class="title">Teléfono 2.</div>
+                    <div class="info">{{ info?.telefono_2 ? info?.telefono_2 : 'No se registro' }}</div>
+                </div>
+                <div class="info-line">
+                    <div class="title">Fecha de nacimiento</div>
+                    <div class="info"> {{ info?.fecha_nacimiento_acudiente | date:'longDate' }} </div>
+                </div>
+                <div class="info-line">
+                    <div class="title">Estado civil</div>
+                    <div class="info"> {{ info?.estado_civil | titlecase }} </div>
+                </div>
+                <div class="info-line">
+                    <div class="title">Parentesco con el residente</div>
+                    <div class="info">{{ info?.parentesco }}</div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+</div>

@@ -1,0 +1,66 @@
+<form name="formEditarMedicamento" [formGroup]="formEditarMedicamento" (ngSubmit)="onSubmit()" novalidate>
+  <h2 mat-dialog-title>Editar información del medicamento</h2>
+  <mat-dialog-content>
+      <div class="row">
+          <mat-form-field class="col-md-6">
+            <mat-label>Nombre del medicamento</mat-label>
+            <input matInput [(ngModel)]="form.nombre_medicamento" name="nombreMedicamento" 
+            id="nombreMedicamento" formControlName="nombreMedicamento" required>
+            <span matPrefix class="fa fa-pills primary-400-fg">&nbsp;&nbsp;</span>
+            <mat-error *ngIf="nombreMedicamentoForm.invalid">
+                {{ getErrorMessageNombreMedicamento() }}
+            </mat-error>
+          </mat-form-field>
+      
+          <mat-form-field class="col-md-6">
+            <mat-label>Tipo de aplicación</mat-label>
+            <mat-select class="roboto" [(ngModel)]="form.id_tipo_aplicacion"
+            name="tipo_aplicacion" formControlName="tipoAplicacion" required>
+              <mat-option *ngFor="let items of tipoAplicacion" 
+              [value]="items.id_tipo_aplicacion">
+                  {{ items.nombre_aplicacion }}
+              </mat-option>
+            </mat-select>
+            <span matPrefix class="fa fa-syringe primary-400-fg">&nbsp;&nbsp;</span>
+            <mat-error *ngIf="tipoAplicacionForm.invalid">
+                {{ getErrorMessageTipoAplicacion() }}
+            </mat-error>
+          </mat-form-field>
+      
+          <mat-form-field class="col-md-6">
+            <mat-label>Dosis</mat-label>
+            <input matInput id="dosisMedicamento" name="dosisMedicamento" 
+            [(ngModel)]="form.dosis" formControlName="dosis" required>
+            <span matPrefix class="fa fa-hashtag primary-400-fg">&nbsp;&nbsp;</span>
+            <mat-error *ngIf="tipoAplicacionForm.invalid">
+              {{ getErrorMessageTipoAplicacion() }}
+            </mat-error>
+        </mat-form-field>
+      
+        <mat-form-field class="col-md-6">
+          <mat-label>Unidad de medida</mat-label>
+          <mat-select id="idUnidadMedida" name="idUnidadMedida" class="roboto"
+          [(ngModel)]="form.id_unidad_medida" formControlName="unidadMedida" required>
+              <mat-option *ngFor="let items of unidadMedida" 
+              [value]="items.id_unidad_medida"> 
+                  {{ items.unidad_medida }} 
+              </mat-option>
+          </mat-select>
+          <span matPrefix class="fa fa-swatchbook primary-400-fg">&nbsp;&nbsp;</span>
+          <mat-error *ngIf="unidadMedidaForm.invalid">
+            {{ getErrorMessageUnidadMedida() }}
+          </mat-error>
+        </mat-form-field>
+      
+    </div>
+  </mat-dialog-content>
+  <div mat-dialog-actions>
+    <div class="col align-self-start">
+      <a mat-button color="accent" (click)="restaurar()" >Restaurar</a>
+    </div>
+    <div class="col align-self-end" align="end">
+      <a mat-button (click)="closeModal()">Cancelar</a>
+      <button mat-raised-button color="warn">Guardar</button>
+    </div>
+  </div>
+</form>

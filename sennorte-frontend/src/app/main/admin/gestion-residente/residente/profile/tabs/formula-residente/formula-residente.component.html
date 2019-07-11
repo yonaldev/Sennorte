@@ -1,0 +1,22 @@
+<div id="photos-videos" class="p-24 px-44 row" fxLayout="row" fxLayoutAlign="center start">
+  <div *ngIf="formulas.length === 0" class="w-100-p" fxLayout="column" fxLayoutAlign="start center">
+    <div>
+      <h3>No se han registrado fórmulas medicas para este residente</h3>
+    </div>
+    <div><button mat-button (click)="openModalFormula(doc)">Registrar fórmula médica</button></div>
+  </div>
+  <div class="w-100-p mb-20" *ngIf="formulas.length > 0" fxLayout="row" fxLayoutAlign="end start">
+    <button mat-button (click)="openModalFormula(doc)">Registrar fórmula médica</button>
+  </div>
+  <div class="card-formula col-md-4 mb-16" *ngFor="let item of formulas">
+    <mat-card (click)="verFormula(item)">
+      <mat-card-title>No. {{ item.id_formula }} </mat-card-title>
+      <mat-card-subtitle>{{ item.fecha_formula | date:'longDate' }}</mat-card-subtitle>
+      <h3>{{ item.medicamentos_asociados }} medicamentos</h3>
+      <mat-card-footer class="px-16 py-4 mat-primary-bg">
+        <span style="text-decoration: underline">Registrada por:</span> <br>
+        {{ item.encargado_formula | titlecase}}
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</div>

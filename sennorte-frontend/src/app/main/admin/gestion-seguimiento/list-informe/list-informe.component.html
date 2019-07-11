@@ -1,0 +1,64 @@
+<div class="col-md-12">
+
+  <div class="row" fxHide.gt-xs>
+    <div class="col-md-12">
+      <mat-form-field appearance="fill">
+        <mat-label>Buscar Informe</mat-label>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar por documento o nombre de usuario">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="w-100-p pt-16 fuse-white-bg mat-elevation-z8">
+    <div class="col-md-12">
+
+      <mat-form-field appearance="fill" fxFlex fxHide fxShow.gt-xs class="pb-0" fxLayoutAlign="end">
+        <mat-label>Buscar usuario</mat-label>
+        <input matInput (keyup)="applyFilter($event.target.value)">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+    </div>
+  </div>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="fechaC">
+        <th mat-header-cell *matHeaderCellDef> Fecha de creacion </th>
+        <td mat-cell *matCellDef="let element"> {{element.fecha_creacion_informe}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="idresidente">
+        <th mat-header-cell *matHeaderCellDef> Documento residente </th>
+        <td mat-cell *matCellDef="let element"> {{element.id_residente}} </td>
+      </ng-container>
+      <!-- Color Column -->
+      <ng-container matColumnDef="accion">
+        <th mat-header-cell *matHeaderCellDef class="w-100"> Acciones </th>
+        <td mat-cell *matCellDef="let row">
+
+          <!-- MODAL DE INGRESAR SEGUIMIENTO  -->
+          <div class="button-row" fxLayoutAlign="end">
+            <button mat-mini-fab color="accent" (click)="ModalS(row.id_seguimiento_diario)" [matTooltip]="'Ver Informe ' + row.nombre1_residente"
+              matTooltipPosition="left">
+              <mat-icon>description</mat-icon>
+            </button>
+          </div>
+
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-raised-button (click)="close()" class="btn-new" color="warn"> Cerrar </button>
+  </div>
+</div>

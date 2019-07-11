@@ -1,0 +1,18 @@
+<div class="atras"></div>
+
+<div id="error-404" fxLayout="column" fxLayoutAlign="center center">
+
+    <div class="content" fxLayout="column" fxLayoutAlign="center center">
+
+        <div class="error-code" [@expandCollapse]>404</div>
+
+        <div class="message roboto" [@slideInLeft]>Página no encontrada o fuera de servicio</div>
+
+        <a class="back-link mt-32" (click)="volver()" 
+        [@slideInBottom] mat-raised-button color="warn">
+            <mat-icon class="icon-btn">chevron_left</mat-icon> Volver
+        </a>
+
+    </div>
+
+</div>

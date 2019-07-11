@@ -1,0 +1,66 @@
+<form [formGroup]="editUsuario" (ngSubmit)="onSubmit()" >
+  <mat-dialog-content class="roboto px-40">
+    <h2 mat-dialog-title> Editar información de usuario </h2>
+    <h4 class="info-label">Información basica</h4>
+    <div class="row">
+      <mat-form-field class="col-md-12">
+        <mat-label>Documento</mat-label>
+        <input matInput type="text" formControlName="document" 
+        [(ngModel)]="form.documento" class="roboto">
+        <span matPrefix class="fa fa-address-card primary-400-fg">&nbsp;&nbsp;</span>
+        <mat-error *ngIf="documentoUser.invalid">
+          {{ getErrorMessageDocument() }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-6">
+        <mat-label>Nombre</mat-label>
+        <input matInput type="text" formControlName="nombre" 
+        [(ngModel)]="form.nombre" class="roboto">
+        <span matPrefix class="fa fa-user-md primary-400-fg">&nbsp;&nbsp;</span>
+        <mat-error *ngIf="nombreUser.invalid">
+          {{ getErrorMessageNombre() }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-6">
+        <mat-label>Apellido</mat-label>
+        <input matInput type="text" formControlName="apellido" 
+        [(ngModel)]="form.apellido" class="roboto">
+        <mat-error *ngIf="apellidoUser.invalid">
+          {{ getErrorMessageApellido() }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <h4 class="info-label">Accesos de cuenta</h4>
+    <div class="row">
+
+      <mat-form-field class="col-md-5">
+        <mat-label>Correo electronico</mat-label>
+        <input matInput type="text" formControlName="email"
+        [(ngModel)]="form.email">
+        <span matPrefix class="fa fa-envelope primary-400-fg">&nbsp;&nbsp;</span>
+        <mat-error *ngIf="emailUser.invalid">
+          {{ getErrorMessageEmail() }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-3">
+        <mat-select placeholder="Rol" [(ngModel)]="form.rol" 
+          formControlName="rol" class="roboto">
+          <mat-option *ngFor="let rol of roles" [value]="rol.id_rol">{{ rol.nombre_rol | titlecase }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+    </div>
+  </mat-dialog-content>
+  <div mat-dialog-actions class="row">
+    <div class="col align-self-start">
+      <a mat-button color="accent" (click)="restaurar()" >Restaurar</a>
+    </div>
+    <div class="col align-self-end" align="end">
+      <a mat-button (click)="closeModal()">Cancelar</a>
+      <button mat-raised-button color="warn" [disabled]="editUsuario.invalid">Guardar</button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,163 @@
+<div class="page-layout carded fullwidth">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg" [@animate]="{value:'*',params:{delay:'50ms',y:'-100px'}}"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- CONTENT HEADER -->
+    <div class="header mat-accent-bg p-24" fxLayout="row" fxLayoutAlign="start center" [@animate]="{value:'*',params:{delay:'50ms',y:'-100px'}}">
+      <h2 class="m-0">Publicación de eventos</h2>
+    </div>
+    <!-- / CONTENT HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card mat-white-bg" [@animate]="{value:'*',params:{delay:'300ms',y:'25px'}}">
+
+      <!-- CONTENT TOOLBAR -->
+      <div class="toolbar px-24 py-8">
+        <span fxLayoutAlign="space-between" class="w-100-p">
+          <button mat-raised-button (click)="openModal()" color="primary">Ver todos</button>
+          <a [routerLink]="['/']" mat-button> Ir a la página principal</a>
+        </span>
+      </div>
+      <!-- / CONTENT TOOLBAR -->
+
+      <!-- CONTENT -->
+      <div class="content p-24">
+
+        <div class="row">
+
+          <div class="col-md-7">
+
+            <form class="row" [formGroup]="eventoForm" (ngSubmit)="onSubmit()">
+
+              <mat-form-field class="col-md-12 mb-8" hintLabel="Máximo 50 caracteres">
+                <mat-label>Título del evento</mat-label>
+                <input formControlName="title" [(ngModel)]="evento.title" matInput required>
+                <mat-hint align="end">{{ evento.title?.length }}/50</mat-hint>
+                <mat-error *ngIf="title.invalid">
+                  {{ getErrorMessageTitle() }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="col-md-12" hintLabel="Máximo 200 caracteres" appearance="outline">
+                <mat-label>Descripción</mat-label>
+                <textarea [(ngModel)]="evento.descripcion" formControlName="descripcion" cols="30" rows="5"
+                  autocomplete="off" matInput required></textarea>
+                <mat-hint align="end">{{ evento.descripcion?.length }}/150</mat-hint>
+                <mat-error *ngIf="descripcion.invalid">
+                  {{ getErrorMessageDescripcion() }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="col-md-6">
+                <mat-label>Fecha del evento</mat-label>
+                <input matInput [(ngModel)]="evento.fecha" formControlName="fecha" [matDatepicker]="inicio" (focus)="inicio.open()"
+                  [min]="fechaActual" required>
+                <mat-datepicker-toggle matSuffix [for]="inicio"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #inicio></mat-datepicker>
+                <mat-hint>Fecha en que se realizara el evento</mat-hint>
+                <mat-error *ngIf="fecha.invalid">
+                  {{ getErrorMessageFecha() }}
+                </mat-error>
+              </mat-form-field>
+
+              <div class="col-md-6" fxLayout="row">
+
+                <mat-form-field fxFlex="35">
+                  <mat-label>Hora</mat-label>
+                  <input type="number" formControlName="hora" [(ngModel)]="evento.hora" matInput required>
+                  <a matSuffix mat-mini-fab class="button-help mr-8" (click)="ayuda('hora')">?</a>
+                  <mat-error *ngIf="hora.invalid">
+                    {{ getErrorMessageHora() }}
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="35">
+                  <mat-label>Minuto</mat-label>
+                  <input type="number" formControlName="minuto" [(ngModel)]="evento.minuto" matInput required>
+                  <a matSuffix mat-mini-fab class="button-help mr-8" (click)="ayuda('minuto')">?</a>
+                  <mat-error *ngIf="minuto.invalid">
+                    {{ getErrorMessageMinuto() }}
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="30">
+                  <mat-label>Horario</mat-label>
+                  <mat-select formControlName="horario" [(ngModel)]="evento.horario">
+                    <mat-option value="a. m.">am</mat-option>
+                    <mat-option value="p. m.">pm</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="horario.hasError('required')">
+                    Campo requerido
+                  </mat-error>
+                </mat-form-field>
+
+              </div>
+
+              <mat-form-field class="col-md-12">
+                <mat-label>URL de la imagen</mat-label>
+                <input formControlName="imagen" [(ngModel)]="evento.imagen" matInput required>
+                <mat-error *ngIf="imagen.hasError('required')">
+                  Campo requerido
+                </mat-error>
+              </mat-form-field>
+
+              <div class="col-md-12" align="end">
+                <button color="primary" [disabled]="eventoForm.invalid" mat-raised-button>Publicar</button>
+              </div>
+
+            </form>
+
+          </div>
+
+          <div class="col-md-5">
+            <span class="mat-heading-1">Vista previa</span>
+            <div class="example-1 card">
+
+              <div class="wrapper" [ngStyle]="{'background':'url('+( evento.imagen ? evento.imagen : 'assets/images/backgrounds/back-card.svg')+') 20% 1% / cover no-repeat'}">
+                <div class="date">
+                  <span class="day">{{ (evento.fecha ? evento.fecha : fechaActual) | date:'dd' }}</span>
+                  <span class="month">{{ (evento.fecha ? evento.fecha : fechaActual) | date:'MMM' }}</span>
+                  <span class="year">{{ (evento.fecha ? evento.fecha : fechaActual) | date:'yyyy' }}</span>
+                </div>
+                <div class="data">
+                  <div class="content">
+                    <span class="author">Adminitración</span>
+                    <h1 class="title"><a>{{ evento.title?.length > 0 ? evento.title : 'Título' }}</a></h1>
+                    <p class="text"> {{ evento.descripcion?.length > 0 ? evento.descripcion : 'Descripción del evento'
+                      }} </p>
+                    <label for="show-menu" class="menu-button"><span></span></label>
+                  </div>
+                  <input type="checkbox" checked id="show-menu" />
+                  <ul class="menu-content">
+                    <li>
+                      <a class="fa fa-clock"></a>
+                    </li>
+                    <div class="w-100-p">
+                      Hora {{evento.hora ? evento.hora : (fechaActual | date:'h') }}{{ evento.minuto ?
+                      ':'+evento.minuto : ':'+(fechaActual | date:'mm' )}} {{ evento.horario ? evento.horario :
+                      (fechaActual | date:'aa') }}
+                    </div>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

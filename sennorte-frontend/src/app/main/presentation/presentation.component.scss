@@ -1,0 +1,443 @@
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script:400,700');
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+.container {
+    height: 100vh;
+}
+.space-between {
+    flex: 1 1 auto;
+}
+
+.white-bg {
+    background: #fff;
+}
+
+.white-fg {
+    color: #fff;
+}
+
+.navbar {
+    position: fixed;
+    background: transparent;
+    z-index: 100;
+}
+
+#container {
+    margin: 0;
+    padding: 0;
+}
+
+section {
+    width: 100%;
+    height: 100vh;
+    background: url('../../../assets/images/backgrounds/viejos.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    z-index: 1;
+}
+
+section .wave {
+    position: absolute;
+    width: 100%;
+    height: 143px;
+    bottom: 0;
+    left: 0;
+    background: url('../../../assets/images/backgrounds/wave.png');
+    animation: animate 10s linear infinite;
+    z-index: 3;
+}
+
+section .layer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background: #C02425;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #F0CB35, #C02425);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #F0CB35, #C02425); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    opacity: .3;
+    z-index: 2;
+}
+
+section .wave::before {
+    content: '';
+    width: 100%;
+    height: 143px;
+    background: url('../../../assets/images/backgrounds/wave.png');
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: .4;
+    animation: animate-reverse 10s linear infinite;
+}
+
+@keyframes animate {
+    0% {
+        background-position: 0;
+    }
+    100% {
+        background-position: 1360px;
+    }
+}
+
+@keyframes animate-reverse {
+    0% {
+        background-position: 0;
+    }
+    100% {
+        background-position: -1360px;
+    }
+}
+
+.banner {
+    height: 100vh;
+}
+
+.banner-text-title {
+    font-family: 'Lato', sans-serif !important;
+}
+
+.banner-text-subtitle {
+    font-family: 'Dancing Script', cursive !important;
+    color: #fff;
+    z-index: 4;
+}
+
+.banner-2 {
+    height: 200px;
+    width: 100%;
+    padding: 20px 10%;
+}
+
+.bg-2 {
+    background: url('../../../assets/images/backgrounds/hojas-otono.jpg');
+    background-size: 100%;
+    background-attachment: fixed; 
+    background-position-y: center;
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    z-index: -1;
+    left: 0;
+}
+
+.layer-2 {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background: #C02425;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #F0CB35, #C02425);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #F0CB35, #C02425); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    opacity: .2;
+}
+
+.slogan {
+    font-family: 'Dancing Script', cursive !important;
+}
+
+.cursiva {
+    font-family: 'Dancing Script', cursive !important;
+}
+
+.container {
+    width: 100%;
+    min-height: 200px;
+}
+
+.quienes-title {
+    padding: 0px 10%;
+}
+
+.quienes {
+    padding: 0px 15%;
+}
+
+.circle {
+  width: 250px;
+  height: 250px;
+  background: #FF5F6D;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top right, #FFC371, #FF5F6D);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top right, #FFC371, #FF5F6D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  position: absolute;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.img-presentation {
+  z-index: 2;
+}
+
+.objetivo-title {
+    padding: 0px 10%;
+}
+
+.objetivo {
+    padding: 0px 15%;
+    text-align: right;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700');
+// Variables
+$regal-blue: #034378;
+$san-juan: #2d4e68;
+$bermuda: #fbca26;
+$white: #fff;
+$black: #000;
+$open-sans: 'Open Sans',
+sans-serif;
+// clear-fix mixin
+@mixin cf {
+  &::before,
+  &::after {
+    content: '';
+    display: table;
+  }
+  &::after {
+    clear: both;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+.eventos {
+  width: 100%;
+  min-height: 200px;
+  max-height: 700px;
+  padding: 50px 15%;
+  overflow-x: scroll; 
+  z-index: 3;
+  background: url('../../../assets/images/backgrounds/autumn-hojas.svg');
+  background-repeat: no-repeat;
+}
+
+.eventos-title {
+    padding: 20px 10%;
+}
+
+// Base styles
+.card {
+  float: left;
+  padding: 0 1.7rem;
+  width: 100%;
+  .menu-content {
+    @include cf;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    li {
+      display: inline-block;
+    }
+    a {
+      color: $white;
+    }
+    span {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      font-size: 10px;
+      font-weight: 700;
+      font-family: 'Open Sans';
+      transform: translate(-50%, 0);
+    }
+  }
+  .wrapper {
+    background-color: $white;
+    min-height: 540px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 19px 38px rgba($black, 0.3), 0 15px 12px rgba($black, 0.2);
+    &:hover {
+      .data {
+        transform: translateY(0);
+      }
+    }
+  }
+  .data {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    transform: translateY(calc(70px + 1em));
+    transition: transform 0.3s;
+    .content {
+      padding: 1em;
+      position: relative;
+      z-index: 1;
+    }
+  }
+  .author {
+    font-size: 12px;
+  }
+  .title {
+    margin-top: 10px;
+  }
+  .text {
+    height: 70px;
+    margin: 0;
+  }
+  input[type='checkbox'] {
+    display: none;
+  }
+  input[type='checkbox']:checked + .menu-content {
+    transform: translateY(-60px);
+  }
+}
+
+// First example styles
+.example-1 {
+  .date {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: $bermuda;
+    color: $white;
+    padding: 0.8em;
+    span {
+      display: block;
+      text-align: center;
+    }
+    .day {
+      font-weight: 700;
+      font-size: 24px;
+      text-shadow: 2px 3px 2px rgba($black, 0.18);
+    }
+    .month {
+      text-transform: uppercase;
+    }
+    .month,
+    .year {
+      font-size: 12px;
+    }
+  }
+  .content {
+    background-color: $white;
+    box-shadow: 0 5px 30px 10px rgba($black, 0.3);
+  }
+  .title {
+    a {
+      color: lighten($black, 50%);
+    }
+  }
+  .menu-button {
+    position: absolute;
+    z-index: 999;
+    top: 16px;
+    right: 16px;
+    width: 25px;
+    text-align: center;
+    cursor: pointer;
+    span {
+      width: 5px;
+      height: 5px;
+      background-color: lighten($black, 50%);
+      color: lighten($black, 50%);
+      position: relative;
+      display: inline-block;
+      border-radius: 50%;
+      &::after,
+      &::before {
+        content: '';
+        display: block;
+        width: 5px;
+        height: 5px;
+        background-color: currentColor;
+        position: absolute;
+        border-radius: 50%;
+      }
+      &::before {
+        left: -10px;
+      }
+      &::after {
+        right: -10px;
+      }
+    }
+  }
+  .menu-content {
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+    transition: transform 0.3s;
+    transform: translateY(0);
+    background-color: $bermuda;
+    li {
+      width: 33.333333%;
+      float: left;
+      height: 60px;
+      position: relative;
+    }
+    a {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+    }
+    a: hover {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 24px;
+        text-decoration: none;
+    }
+    div {
+        width: 66.666666%;
+        text-align: start;
+        padding-top: 3%;
+        font-size: 20px; 
+        color: #fff;
+        font-family: 'Lato', sans-serif !important;
+    }
+    span {
+      top: -10px;
+    }
+  }
+}
+
+.footer {
+  // height: 380px;
+  height: 50px;
+  background: url('../../../assets/images/backgrounds/hojas-otono.jpg');
+  background-size: 100%;
+  background-attachment: fixed; 
+  background-position-y: center;
+
+  .footer-content {
+    padding: 20px 10%;
+    z-index: 1;
+  }
+
+  .footer-line {
+    height: 50px;
+    width: 100%;
+    padding: 10px 5%;
+    color: #fff;
+    background: #C02425;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #F0CB35, #C02425);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #F0CB35, #C02425); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    text-transform: uppercase;
+    z-index: 1;
+  }  
+
+}
+
+// .layer-3 {
+//   position: absolute;
+//   left: 0;
+//   width: 100%;
+//   height: 300px;
+//   background: #C02425;  /* fallback for old browsers */
+//   background: -webkit-linear-gradient(to right, #F0CB35, #C02425);  /* Chrome 10-25, Safari 5.1-6 */
+//   background: linear-gradient(to right, #F0CB35, #C02425); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+//   opacity: .2;
+// }
+
+.img-footer {
+  height: 100%;
+}

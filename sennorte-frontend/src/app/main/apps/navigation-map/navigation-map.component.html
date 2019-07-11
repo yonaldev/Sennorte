@@ -1,0 +1,66 @@
+<div class="page-layout simple fullwidth">
+
+  <!-- HEADER -->
+  <div class="header mat-accent-bg pl-48 p-24" fxLayout="row" fxLayoutAlign="start center">
+    <h2>Mapa de navegación</h2>
+  </div>
+  <!-- / HEADER -->
+
+  <!-- CONTENT -->
+  <div class="content p-24 mat-white-bg" fxLayout="row wrap" *ngIf="rol === '1' || rol === '5'">
+    <mat-divider fxLayout="column" fxFlex="5" mat-inset [vertical]="true"></mat-divider>
+    <ul fxLayout="row" fxFlex="95">
+      <li class="mat-subheading-2 " style="list-style: none">
+        <a class="primary-600-fg" [routerLink]="['/home']">Inicio</a>
+      </li>
+      <li class="mat-subheading-2 primary-600-fg" style="list-style: none">Gestión de residentes</li>
+      <ul>
+        <li class=" mat-subheading-2"><a class="primary-600-fg" [routerLink]="['/residente']">Residentes</a></li>
+        <li class=" mat-subheading-2"><a class="primary-600-fg" [routerLink]="['/acudiente']">Acudientes</a></li>
+      </ul>
+      <li class="mat-subheading-2 primary-600-fg" style="list-style: none">Seguimientos médicos</li>
+      <ul>
+        <li class=" mat-subheading-2"><a class="primary-600-fg" [routerLink]="['/seguimiento/valoracion-inicial']">Valoración
+            inicial</a></li>
+        <li class=" mat-subheading-2"><a class="primary-600-fg" [routerLink]="['/seguimiento/seguimiento-diario']">Seguimiento
+            diario</a></li>
+      </ul>
+      <li class="mat-subheading-2 " style="list-style: none">
+        <a class="primary-600-fg" [routerLink]="['/formula']">Fórmula médica</a>
+      </li>
+      <li class="mat-subheading-2 " style="list-style: none">
+        <a class="primary-600-fg" [routerLink]="['facturacion']">Facturación</a>
+      </li>
+      <!-- <li class="mat-subheading-2 " style="list-style: none"><a class="primary-600-fg" [routerLink]="['/eventos']">Eventos</a></li> -->
+      <li class="mat-subheading-2 " style="list-style: none"><a class="primary-600-fg" [routerLink]="['/usuario-control']">Gestión
+          de usuarios</a></li>
+      <!-- <li class="mat-subheading-2 " style="list-style: none"><a class="primary-600-fg" [routerLink]="['/novedades']">Novedades</a></li> -->
+      <li class="mat-subheading-2 primary-600-fg" style="list-style: none">Configuraciones</li>
+      <ul>
+        <li class=" mat-subheading-2"><a class="primary-600-fg" [routerLink]="['/config/medicamento']">Medicamentos</a></li>
+        <li class=" mat-subheading-2">
+          <!-- <a class="primary-600-fg" [routerLink]="['/config/habitacion-cama']">Camas y habitaciones</a> -->
+        </li>
+      </ul>
+    </ul>
+  </div>
+  <div class="content p-24 mat-white-bg" fxLayout="row wrap" *ngIf="rol === '2'">
+    <mat-divider fxLayout="column" fxFlex="5" mat-inset [vertical]="true"></mat-divider>
+    <ul fxLayout="row" fxFlex="95">
+      <li class="mat-subheading-2 " style="list-style: none">
+        <a class="primary-600-fg" [routerLink]="['/home']">Inicio</a>
+      </li>
+      <li class=" mat-subheading-2" style="list-style: none">
+        <a class="primary-600-fg" [routerLink]="['/residente']">Residentes</a>
+      </li>
+      <li class=" mat-subheading-2" style="list-style: none">
+        <a class="primary-600-fg" [routerLink]="['/seguimiento/seguimiento-diario']">Seguimiento diario</a>
+      </li>
+      <li class="mat-subheading-2 " style="list-style: none">
+        <a class="primary-600-fg" [routerLink]="['/formula']">Fórmula médica</a>
+      </li>
+    </ul>
+  </div>
+  <!-- / CONTENT -->
+
+</div>

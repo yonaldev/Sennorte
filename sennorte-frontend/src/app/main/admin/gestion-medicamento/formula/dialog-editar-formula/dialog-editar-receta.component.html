@@ -1,0 +1,95 @@
+<h1 matDialogTitle>Editar sección de la receta</h1>
+
+<mat-dialog-content class="px-28">
+    
+    <div  [formGroup]="recetaForm" 
+    class="mt-16">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="row">
+
+                    <mat-form-field class="col-md-12">
+                        <mat-label>Buscar medicamento</mat-label>
+                        <input (keyup)="searchMedicamento(medicamento.value)" 
+                                (change)="tiene = true" #medicamento matInput>
+                        <span class="fa fa-search primary-400-fg" matPrefix>&nbsp;&nbsp;</span>
+                        <mat-icon matSuffix>chevron_right</mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-12">
+                        <mat-label>Dosis</mat-label>
+                        <input type="number" [(ngModel)]="data.dosis_medicamento" formControlName="dosis" required matInput>
+                        <span class="fa fa-flask primary-400-fg" matPrefix>&nbsp;&nbsp;</span>
+                        <span matSuffix>unidad(es)</span>
+                        <mat-error *ngIf="dosis.invalid">
+                        {{ getErrorMessageDosis() }}
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-12">
+                        <mat-label>Lapsos</mat-label>
+                        <input type="number" [(ngModel)]="data.lapso" formControlName="lapso" required matInput>
+                        <span matPrefix>Cada&nbsp;&nbsp;</span>
+                        <span matSuffix>hora(s)</span>
+                        <mat-error *ngIf="lapso.invalid">
+                        {{ getErrorMessageLapso() }}
+                        </mat-error>
+                    </mat-form-field> 
+
+                    <mat-form-field class="col-md-12">
+                        <mat-label>Duración</mat-label>
+                        <input type="number" [(ngModel)]="data.dias" formControlName="dias" required matInput>
+                        <span matPrefix>Durante&nbsp;&nbsp;</span>
+                        <span matSuffix>día(s)</span>
+                        <mat-error *ngIf="dias.invalid">
+                        {{ getErrorMessageDias() }}
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <p *ngIf="tiene && medicamentos.length > 0" align="left"><b>Resúltados de la búsqueda:</b> '{{ medicamento.value }}'</p>
+                <p *ngIf="!tiene" align="left"><b>Medicamentos registrados</b></p>
+                <mat-radio-group  class="radio-medicamentos" 
+                                formControlName="medicamento" 
+                                [(ngModel)]="data.medicamento_id_medicamento"
+                                required>
+                    <mat-radio-button *ngFor="let items of medicamentos; index as i"
+                                        [value]="items.id_medicamento"
+                                        class="roboto w-100-p">
+                        {{ items.nombre_medicamento + ' ' + items.dosis + items.unidad_medida + ' - ' + items.nombre_aplicacion }}
+                    </mat-radio-button>
+                </mat-radio-group>
+
+                <p *ngIf="medicamentos.length === 0" class="roboto">
+                    <mat-chip-list>
+                        <mat-chip color="warn">No se han encontrado resultados </mat-chip>
+                    </mat-chip-list>
+                </p>
+
+                <mat-error *ngIf="medicamento.invalid">
+                {{ getErrorMessageMedicamento() }}
+                </mat-error>
+                <div class="col-md-12">
+                    <a  *ngIf="rolUser == 1" 
+                        class="mt-16"
+                        (click)="openDialogMedicamento()" 
+                        mat-button>
+                        Registrar medicamento
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayoutAlign="end center">
+    <button mat-button (click)="OnNoClick()">Cancelar</button>
+    <button mat-raised-button 
+            [disabled]="recetaForm.invalid"
+            [mat-dialog-close]="data"
+            color="accent">
+        Guardar
+    </button>
+</mat-dialog-actions>

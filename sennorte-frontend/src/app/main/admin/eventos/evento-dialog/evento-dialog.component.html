@@ -1,0 +1,53 @@
+<h1 matDialogTitle>Eventos registrados</h1>
+
+<mat-dialog-content class="py-28">
+
+
+    <mat-form-field class="w-100-p" appearance="outline">
+        <mat-label>Buscar</mat-label>
+        <input matInput (keyup)="applyFilter($event.target.value)" >
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100-p" *ngIf="dataSource?.data.length > 0"
+            [@animate]="{value:'*',params:{delay:'50ms',scale:0.5}}">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="titulo">
+            <th mat-header-cell *matHeaderCellDef class="primary-500-bg white-fg"> Titulo </th>
+            <td mat-cell *matCellDef="let row" class="pr-12"> {{row.titulo_evento}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef class="primary-500-bg white-fg"> Fecha </th>
+            <td mat-cell *matCellDef="let row" class="pr-12"> {{row.fecha | date:'longDate'}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="hora">
+            <th mat-header-cell *matHeaderCellDef class="primary-500-bg white-fg"> Hora </th>
+            <td mat-cell *matCellDef="let row" class="pr-12"> {{row.hora}}:{{row.minuto < 10 ? '0'+row.minuto : row.minuto}} {{row.horario}}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="accion">
+            <th mat-header-cell *matHeaderCellDef class="primary-500-bg white-fg">  </th>
+            <td mat-cell *matCellDef="let row" class="pr-12">
+                <button mat-mini-fab matTooltip="Borrar" 
+                        matTooltipPosition="right"
+                        (click)="delete(row.id_evento)"><mat-icon>clear</mat-icon></button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+
+
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayoutAlign="end center">
+    <button mat-button matDialogClose>Cerrar</button>
+</mat-dialog-actions>

@@ -1,0 +1,83 @@
+<form [formGroup]="editarAcudiente" (ngSubmit)="onSubmit()">
+  <mat-dialog-content class="row" class="roboto px-20">
+
+    <h1 matDialogTitle>Editar informacion del acudiente: {{data.nombre_acudiente}} </h1>
+    <div class="col-md-12 row" [@animate]="{value:'*',params:{delay:'50ms', x:'-25px'}}">
+
+      <mat-form-field class="col-md-5">
+        <mat-label>Documento de identidad</mat-label>
+        <input matInput formControlName="documento" [(ngModel)]="form.id_acudiente">
+        <span matPrefix class="fa fa-address-card primary-400-fg">&nbsp;&nbsp;</span>
+        <mat-error *ngIf="documentoAcudiente.invalid">
+          {{ getErrorMessageDocumentoAcudiente() }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-3">
+        <mat-label>Nombre completo</mat-label>
+        <input matInput formControlName="nombre" [(ngModel)]="form.nombre_acudiente">
+        <span matPrefix class="fa fa-user-tie primary-400-fg">&nbsp;&nbsp;</span>
+        <mat-hint>Nombres y apellidos</mat-hint>
+        <mat-error>
+          Campo requerido
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-4">
+        <mat-label>Dirección de residencia</mat-label>
+        <input matInput formControlName="direccion" [(ngModel)]="form.direccion_acudiente">
+        <span matPrefix class="fas fa-map-marker-alt primary-400-fg">&nbsp;&nbsp;</span>
+        <mat-error>
+          Campo requerido
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-4">
+        <mat-label>Primer télefono</mat-label>
+        <input matInput formControlName="primerTelefono" [(ngModel)]="form.telefono_1">
+        <span matPrefix class="fa fa-phone primary-400-fg">1&nbsp;&nbsp;</span>
+        <mat-error>
+          Campo requerido
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-4">
+        <mat-label>Segundo télefono</mat-label>
+        <input matInput formControlName="segundoTelefono" [(ngModel)]="form.telefono_2">
+        <span matPrefix class="fa fa-phone primary-400-fg">2&nbsp;&nbsp;</span>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-4">
+        <mat-label>Fecha de nacimiento</mat-label>
+        <input matInput formControlName="fecha_nacimiento" [matDatepicker]="nacimiento"
+          (focus)="nacimiento.open()" [(ngModel)]="form.fecha_nacimiento_acudiente">
+        <span matPrefix class="fa fa-birthday-cake  primary-400-fg">&nbsp;&nbsp;</span>
+        <mat-datepicker-toggle matSuffix [for]="nacimiento"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #nacimiento></mat-datepicker>
+        <mat-error *ngIf="nacimientoAcudiente.invalid">
+          {{getErrorMessageNacimientoAcudiente()}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-4">
+        <mat-label>Estado civil</mat-label>
+        <mat-select class="roboto" formControlName="estado_civil" [(ngModel)]="form.id_estado_civil">
+          <mat-option *ngFor="let items of estado_civil" [value]="items.id_estado_civil">
+            {{ items.estado_civil }}
+          </mat-option>
+        </mat-select>
+        <span matPrefix class="fa fa-ring primary-400-fg">&nbsp;&nbsp;</span>
+        <mat-error>
+          Campo requerido
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <a mat-button color="accent" (click)="restaurar()">Restaurar</a>
+    <span style="flex: 1 0 auto"></span>
+    <a mat-button (click)="closeModal()">Cancelar</a>
+    <button mat-raised-button color="warn">Guardar</button>
+  </div>
+</form>

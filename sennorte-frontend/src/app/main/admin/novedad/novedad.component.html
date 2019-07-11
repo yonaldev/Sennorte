@@ -1,0 +1,242 @@
+<div class="page-layout blank px-32 py-32" fusePerfectScrollbar *fuseIfOnDom >
+    <div class="p-12 w-100-p mat-elevation-z8 border-rounded formulario" 
+    [@animate]="{value:'*=>*',params:{x:'-25px'}}" >
+
+      <div class="row">
+        <div class="col-md-8">
+          <h1 class="ml-12 mt-12">Registro de novedad</h1>
+        </div>
+        <div class="col-md-4" fxLayoutAlign="end">
+          <a [routerLink]="['/home']" color="warn" class="mr-12" mat-fab 
+          matTooltip="Ir a inicio" matTooltipPosition="left">
+            <mat-icon>home</mat-icon>
+          </a>
+        </div>
+      </div>
+      <mat-divider ></mat-divider>
+
+      <form class="row px-24 pb-24" [formGroup]="registrarNovedad" (ngSubmit)="onSubmit()" >
+
+        <mat-radio-group class="col-md-12 my-20 roboto" [(ngModel)]="form.tipoNovedad" 
+        formControlName="tipoNovedad" name="tipoNovedad">
+          <mat-label>Tipo de novedad: </mat-label>
+          <mat-radio-button *ngFor="let item of novedades" class="roboto mr-12" [value]="item.value"> 
+            {{ item.tipo }} 
+          </mat-radio-button>
+        </mat-radio-group>
+
+        <div *ngIf="form.tipoNovedad == 1" class="px-24 roboto col-md-12 row">
+
+        <!--Formulario card mensaje-->
+          <div class="col-md-6 row" [@animate]="{value:'*',params:{duration:'400ms',delay:'150ms',x:'-25px'}}">
+
+            <mat-form-field class="col-md-12" hintLabel="Máximo 50 caracteres" >
+              <mat-label>Titulo</mat-label>
+              <input type="text" matInput #titulo [(ngModel)]="form.title" name="title" 
+              formControlName="title" required>
+              <span matPrefix class="fa fa-window-maximize primary-400-fg">&nbsp;&nbsp;</span>
+              <mat-hint align="end"> {{ titulo.value?.length }}/50 </mat-hint>
+              <mat-error *ngIf="title.invalid">
+                {{ getErrorMessageTitle() }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-12" hintLabel="Máximo 150 caracteres">
+              <mat-label>Descripción</mat-label>
+              <textarea matInput #descripcion [(ngModel)]="form.descripcion" 
+              formControlName="descripcion" name="descripcion" required></textarea>
+              <span matPrefix class="fa fa-edit primary-400-fg">&nbsp;&nbsp;</span>
+              <mat-hint align="end"> {{ descripcion.value?.length }}/150 </mat-hint>
+              <mat-error *ngIf="descripcion.invalid">
+                {{ getErrorMessageDescripcion() }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-12">
+              <mat-label>Enlace</mat-label>
+              <input matInput type="text" [(ngModel)]="form.url" name="url"
+              formControlName="url">
+              <span matPrefix class="fa fa-link primary-400-fg">&nbsp;&nbsp;</span>
+              <mat-hint>URL del sitio al que desea redirigir</mat-hint>
+            </mat-form-field>
+
+            <div class="col-md-12 mt-16">
+              <p class="inline">Selecciona un color:</p>
+              <fuse-material-color-picker class="inline ml-12" [(selectedClass)]="form.color"
+              (onValueChange)="changeColor()"></fuse-material-color-picker>
+            </div>
+
+            <div class="col-md-12 mt-16">
+              <mat-checkbox class="roboto" [(ngModel)]="checked" name="importancia" 
+              (change)="validarImportancia()" formControlName="importancia">
+                Dar importancia 
+              </mat-checkbox>
+            </div>
+
+          </div>
+
+          <div class="col-md-6" [@animate]="{value:'*',params:{duration:'400ms',delay:'150ms',x:'25px'}}">
+            <mat-card [ngClass]="[form.color]">
+              <mat-card-subtitle> {{ form.fecha }} </mat-card-subtitle>
+              <mat-card-title>
+                <span [ngClass]="form.importancia == 1 ? 'fa fa-star' : ''" 
+                *ngIf="form.importancia == 1"
+                [@animate]="{value:'*',params:{duration:'400ms',delay:'150ms',x:'-25px'}}"></span>
+                {{ form.title || 'Titulo' }} 
+              </mat-card-title>
+              <mat-card-content class="roboto">
+                <p> {{ form.descripcion || 'Texto' }} </p>
+              </mat-card-content>
+              <mat-divider *ngIf="form.url" 
+              [@animate]="{value:'*',params:{x:'-25px'}}"></mat-divider>
+              <mat-card-actions fxLayoutAlign="end" *ngIf="form.url" 
+              [@animate]="{value:'*=>void',params:{x:'-25px'}}">
+                <a mat-stroked-button>ENLACE</a>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+
+        </div>
+
+        <!--Formulario card información-->
+        <div *ngIf="form.tipoNovedad == 2" class="px-24 roboto col-md-12 row">
+          
+          <div class="col-md-6" [@animate]="{value:'*',params:{duration:'400ms',delay:'150ms',x:'-25px'}}">
+            <mat-form-field class="col-md-12" hintLabel="Máximo 50 caracteres" >
+              <mat-label>Titulo</mat-label>
+              <input type="text" matInput #titulo [(ngModel)]="form.title" name="title"
+              formControlName="title" required>
+              <span matPrefix class="fa fa-window-maximize primary-400-fg">&nbsp;&nbsp;</span>
+              <mat-hint align="end"> {{ titulo.value?.length }}/50 </mat-hint>
+              <mat-error *ngIf="title.invalid">
+                {{ getErrorMessageTitle() }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-12" hintLabel="Máximo 150 caracteres">
+              <mat-label>Descripción</mat-label>
+              <textarea matInput #descripcion [(ngModel)]="form.descripcion" 
+              formControlName="descripcion" name="descripcion" required></textarea>
+              <span matPrefix class="fa fa-edit primary-400-fg">&nbsp;&nbsp;</span>
+              <mat-hint align="end"> {{ descripcion.value?.length }}/150 </mat-hint>
+              <mat-error *ngIf="descripcion.invalid">
+                {{ getErrorMessageDescripcion() }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-12">
+              <mat-label>Imagen</mat-label>
+              <input matInput type="url" [(ngModel)]="form.urlImagen" 
+              formControlName="urlImagen" name="imagen">
+              <span matPrefix class="fa fa-image primary-400-fg">&nbsp;&nbsp;</span>
+              <mat-hint>Tamaño optimo: 500px +</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-12" >
+              <mat-label>Detalles</mat-label>
+              <textarea matInput name="detalles" [(ngModel)]="form.detalles" rows="5" 
+              formControlName="detalle"></textarea>
+              <span matPrefix class="fa fa-info-circle primary-400-fg">&nbsp;&nbsp;</span>
+            </mat-form-field>
+            <div class="col-md-12 mt-16">
+              <mat-checkbox class="roboto" [(ngModel)]="checked" name="importancia" 
+              (change)="validarImportancia()" formControlName="importancia">
+                Dar importancia 
+              </mat-checkbox>
+            </div>
+          </div>
+
+          <div class="col-md-6" [@animate]="{value:'*',params:{duration:'400ms',delay:'150ms',x:'25px'}}">
+            <mat-card>
+              <img *ngIf="form.urlImagen" mat-card-image [src]="form.urlImagen ">
+              <mat-card-subtitle> {{ form.fecha }} </mat-card-subtitle>
+              <mat-card-title>
+                <span [ngClass]="form.importancia == 1 ? 'fa fa-star' : ''" 
+                *ngIf="form.importancia == 1"
+                [@animate]="{value:'*',params:{duration:'400ms',delay:'150ms',x:'-25px'}}"></span>
+                {{ form.title || 'Titulo'}}
+              </mat-card-title>
+              <mat-card-content class="roboto">
+                <p>{{ form.descripcion || 'Descripción' }}</p>
+              </mat-card-content>
+              <mat-card-actions align="end">
+                <a mat-button (click)="openDemoModal()">VER MAS</a>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+
+        </div>
+
+        <!--Formulario card publicacion-->
+        <div *ngIf="form.tipoNovedad == 3" class="px-24 roboto col-md-12 row">
+
+          <div class="col-md-6" [@animate]="{value:'*',params:{duration:'400ms',delay:'150ms',x:'-25px'}}">
+            <mat-form-field class="col-md-12" hintLabel="Máximo 50 caracteres" >
+              <mat-label>Titulo</mat-label>
+              <input type="text" matInput #titulo [(ngModel)]="form.title" name="title"
+              formControlName="title" required>
+              <span matPrefix class="fa fa-window-maximize primary-400-fg">&nbsp;&nbsp;</span>
+              <mat-hint align="end"> {{ titulo.value?.length }}/50 </mat-hint>
+              <mat-error *ngIf="title.invalid">
+                {{ getErrorMessageTitle() }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-12" hintLabel="Máximo 150 caracteres">
+              <mat-label>Descripción</mat-label>
+              <textarea matInput #descripcion [(ngModel)]="form.descripcion" 
+              formControlName="descripcion" name="descripcion" required></textarea>
+              <span matPrefix class="fa fa-edit primary-400-fg">&nbsp;&nbsp;</span>
+              <mat-hint align="end"> {{ descripcion.value?.length }}/150 </mat-hint>
+              <mat-error *ngIf="descripcion.invalid">
+                {{ getErrorMessageDescripcion() }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-12">
+              <mat-label>Imagen</mat-label>
+              <input matInput type="url" [(ngModel)]="form.urlImagen" 
+              formControlName="urlImagen" name="imagen">
+              <span matPrefix class="fa fa-image primary-400-fg">&nbsp;&nbsp;</span>
+              <mat-hint>Tamaño optimo: 500px +</mat-hint>
+            </mat-form-field>
+
+            <div class="col-md-12 mt-16">
+              <mat-checkbox class="roboto" [(ngModel)]="checked" name="importancia" 
+              (change)="validarImportancia()" formControlName="importancia">
+                Dar importancia 
+              </mat-checkbox>
+            </div>
+
+          </div>
+ 
+          <div class="col-md-6" [@animate]="{value:'*',params:{duration:'400ms',delay:'150ms',x:'25px'}}">
+            <mat-card>
+              <mat-card-header>
+                  <img mat-card-avatar src="assets/images/logos/fuse.svg" >
+                  <mat-card-title>
+                    <span [ngClass]="form.importancia == 1 ? 'fa fa-star' : ''" 
+                    *ngIf="form.importancia == 1"
+                    [@animate]="{value:'',params:{duration:'400ms',delay:'150ms',x:'-25px'}}"></span>
+                    {{ form.title || 'Titulo' }} 
+                  </mat-card-title>
+                  <mat-card-subtitle> {{ form.fecha }} </mat-card-subtitle>
+              </mat-card-header>
+              <img mat-card-image [src]="form.urlImagen || 'assets/images/backgrounds/header-bg.png'">
+              <mat-card-content class="roboto">
+                  <p> {{ form.descripcion || 'Descripcion' }} </p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+
+        </div>
+
+        <div class="col-md-12 pt-24" fxLayoutAlign="end" *ngIf="form.tipoNovedad" 
+        [@animate]="{value:'*',params:{delay: '100ms',y:'-25px'}}">
+          <button mat-raised-button color="warn" [disabled]="registrarNovedad.invalid">Publicar</button>
+        </div>
+
+      </form>
+    </div>
+
+</div>

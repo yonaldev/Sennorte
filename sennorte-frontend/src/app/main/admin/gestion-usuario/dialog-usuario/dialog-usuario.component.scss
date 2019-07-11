@@ -1,0 +1,24 @@
+.footer{
+    width: 100%;
+    text-align: right;
+}
+
+.example-headers-align .mat-expansion-panel-header-title, 
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+  font-family: 'Roboto';
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-label {
+  margin: 0 !important;
+  color: rgb(179, 179, 179);
+}
+
+mat-form-field {
+  font-family: 'Roboto';
+}

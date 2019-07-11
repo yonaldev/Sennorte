@@ -1,0 +1,188 @@
+// Import Fuse core library
+@import "@fuse/scss/core";
+@import "~@angular/material/theming";
+@import "src/@fuse/scss/fuse";
+
+// -----------------------------------------------------------------------------------------------------
+// @ Multiple material themes example
+// -----------------------------------------------------------------------------------------------------
+
+//Variables card columns
+
+
+// Define the Material palettes
+$yellow-theme-primary: mat-palette($mat-fusedark);
+$yellow-theme-accent: mat-palette($mat-yellow, 600, 400, 700);
+$yellow-theme-warn: mat-palette($mat-red);
+
+// Create the Material theme object
+$yellow-theme: mat-light-theme($yellow-theme-primary, $yellow-theme-accent, $yellow-theme-warn);
+
+// Add ".yellow-theme" class to the body to activate this theme
+.yellow-theme {
+
+    // Generate the Angular Material theme
+    @include angular-material-theme($yellow-theme);
+
+    // Generate the fuse color classes with the new colors...
+    @include generateFuseColorClasses($yellow-theme-primary, $yellow-theme-accent, $yellow-theme-warn);
+}
+
+// //Definir fuente customizada 
+// $custom-typography: mat-typography-config(
+//     $font-family: 'google_sansregular',
+//     $headline: mat-typography-level(32px, 48px, 700),
+//     $body-1: mat-typography-level(16px, 24px, 500)
+//   );
+
+//Utilizar fuente customizada
+// @include angular-material-typography($custom-typography);
+
+// Fab button class
+.fab-container {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+  
+    > div {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        margin-bottom: 5px;
+  
+        button {
+            margin-bottom: 17px;
+        }
+    }
+}
+
+//card columns
+
+
+.card-columns .card {
+    margin-bottom: 12px;
+  }
+  
+@media (min-width: 576px) {
+    .card-columns {
+        -webkit-column-count: 3;
+        -moz-column-count: 3;
+        column-count: 3;
+        -webkit-column-gap: 1.25rem;
+        -moz-column-gap: 1.25rem;
+        column-gap: 1.25rem;
+        orphans: 1;
+        widows: 1;
+    }
+    .card-columns .card {
+        display: inline-block;
+        width: 100%;
+    }
+}
+
+//Clase fuente texto
+// .roboto {
+//     font-family: 'Roboto' !important;
+// }
+
+mat-option {
+    font-family: 'Roboto' !important;
+}
+
+mat-icon {
+    line-height: 100%;
+}
+
+//Clase MD2 botones
+.btn-new {
+    box-shadow: none !important;
+    border-radius: 4px !important;
+    @include mat-elevation(1);
+}
+
+.btn-fab-new {
+    box-shadow: none !important;
+    @include mat-elevation(1);
+}
+
+.btn-pestana {
+    border-radius: 0 0 5px 5px !important; 
+    font-family: 'Roboto';
+}
+
+// Fuente mayor al sweetalert2
+.swal2angular {
+    font-size : 1.3rem  !important;
+}
+
+//other classes
+
+.divider{
+    height: 1px;
+    margin: 5px;
+    background: #1a1a1a;
+} 
+
+.divider-white {
+    background: rgb(167, 166, 166);
+}
+
+.border-top-rounded {
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+}
+
+.warn-border-bottom {
+    border-bottom: solid #4fc3f7 5px;
+}
+
+.border-rounded {
+    border-radius: 10px !important;
+}
+
+.border-top {
+    border-top: solid 1px #aaaaaa;
+}
+
+.border-bot {
+    border-bottom: solid 1px #aaaaaa;
+}
+
+.transparent {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.icon-button {
+    font-size: 1.5em;
+}
+
+.icon-button-alone {
+    margin-left: -10px !important;
+    font-size: 1.5em;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.button-row button,
+.button-row a {
+    margin-right: 2px;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+input[type=number] { -moz-appearance:textfield; }
+
+mat-form-field {
+    font-family: 'Roboto' !important;
+}

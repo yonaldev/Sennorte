@@ -1,0 +1,54 @@
+<div id="profile" class="page-layout simple tabbed">
+    
+    <!-- HEADER -->
+    <div class="header p-24" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+         fxLayoutAlign.gt-sm="space-between end">
+
+        <div class="user-info" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-sm="row"
+             fxLayoutAlign.gt-sm="start center">
+            <mat-progress-spinner
+            style="margin: 0 10px; width: 320px"
+            *ngIf="cargando"
+            color="accent"
+            mode="indeterminate"></mat-progress-spinner>
+            <img *ngIf="!cargando" class="profile-image avatar huge" 
+                [src]=" data?.sexo === 'femenino' ? 'assets/images/avatars/old-woman.png' : 'assets/images/avatars/old-man.png'"
+                 [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+            <div class="name" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">{{ (nombre ? nombre : 'Cargando...') | titlecase }}</div>
+        </div>
+
+        <div class="actions" fxLayout="row" fxLayoutAlign="end center" [@animate]="{value:'*',params:{delay:'200ms'}}">
+            <button mat-raised-button aria-label="volver" [routerLink]="'/residente'">Volver</button>
+            <button mat-raised-button 
+            color="accent" 
+            *ngIf="!cargando && rol === '1' || rol === '5'"
+            [routerLink]="['/residente','edit',id,'profile']"
+            aria-label="Editar">Editar información</button>
+        </div>
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <mat-tab-group dynamicHeight="true" class="stiky">
+
+            <mat-tab label="Seguimiento diario">
+                <profile-timeline [id]="id"></profile-timeline>
+            </mat-tab>
+
+            <mat-tab label="Información">
+                <profile-about [doc]="id" [info]="data"></profile-about>
+            </mat-tab>
+
+            <mat-tab label="Fórmulas médicas">
+                <formula-residente [doc]="id"></formula-residente>
+            </mat-tab>
+
+        </mat-tab-group>
+
+    </div>
+    <!-- / CONTENT -->
+
+</div>

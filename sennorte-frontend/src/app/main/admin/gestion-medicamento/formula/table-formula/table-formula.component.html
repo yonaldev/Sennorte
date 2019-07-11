@@ -1,0 +1,80 @@
+
+<div class="py-28">
+  
+  <div class="w-100-p pt-16 mat-elevation-z8">
+    <div class="col-md-12" fxLayoutAlign="end center">
+
+      <mat-form-field appearance="fill" >
+        <mat-label>Buscar fórmula</mat-label>
+        <input  (keyup)="applyFilter($event.target.value)" 
+                matInput>
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field> 
+
+      <button matTooltip="Registrar fórmula"
+              color="primary"
+              class="ml-8"
+              (click)="openDialog()" 
+              mat-fab>
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+  
+  <div class="mat-elevation-z8">
+      <table mat-table class="table-medicamento" [dataSource]="dataSource">
+        
+          <!-- Referencia Column -->
+          <ng-container matColumnDef="referencia"> 
+              <th mat-header-cell *matHeaderCellDef> Referencia de fórmula </th>
+              <td class="roboto" mat-cell *matCellDef="let row"> {{row.id_formula}} </td>
+          </ng-container>
+      
+          <!-- Residente Column -->
+          <ng-container matColumnDef="residente">
+              <th mat-header-cell *matHeaderCellDef> Residente </th>
+              <td class="roboto" mat-cell *matCellDef="let row"> 
+                  {{ (row.nombre1_residente + ' ' + row.nombre2_residente + ' ' + row.apellido_residente) | titlecase }} 
+              </td>
+          </ng-container>
+
+          <!-- Fecha Column -->
+          <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef> Fecha de fórmula </th>
+            <td class="roboto" mat-cell *matCellDef="let row"> 
+                {{ row.fecha_formula | date:'longDate' }} 
+            </td>
+        </ng-container>
+
+          <!-- Medicamentos asociados Column -->
+          <ng-container matColumnDef="medicamentos">
+            <th mat-header-cell *matHeaderCellDef> Medicamentos asociados </th>
+            <td class="roboto" mat-cell *matCellDef="let row"> 
+                {{ row.medicamentos_asociados }} {{ row.medicamentos_asociados > 1 ? 'medicamentos' : 'medicamento' }} 
+            </td>
+        </ng-container>
+      
+          <!-- Acciones Column -->
+          <!-- Esta columna solo sera visible cuando esten loggeados los roles administrador y gerente -->
+          <ng-container matColumnDef="accion">
+              <th mat-header-cell 
+                  *matHeaderCellDef
+                  class="w-100"> 
+                  Acciones 
+              </th>
+              <td mat-cell *matCellDef="let row">
+                  <div class="button-row" fxLayoutAlign="end">
+                        <button mat-mini-fab color="primary" (click)="verFormula(row)"
+                        matTooltip="Ver formula"
+                        matTooltipPosition="left"><mat-icon>visibility</mat-icon></button>
+                      
+                  </div>
+              </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+  </div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

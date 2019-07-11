@@ -1,0 +1,65 @@
+<h1 matDialogTitle>Valoración inicial de 
+  {{ (row.nombre1_residente + ' ' + (row.nombre2_residente ? row.nombre2_residente : '') + ' ' + row.apellido_residente) | titlecase  }} 
+</h1>
+ 
+<mat-dialog-content class="p-20 px-20">
+
+  <mat-card class="mb-8 mat-elevation-z1 primary-50-bg">
+    <mat-card-header>
+      <mat-card-title><b>Antecedentes personales</b></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      {{ infoValoracion.antecedente_residente }}
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="mb-8 mat-elevation-z1 primary-50-bg">
+    <mat-card-header>
+      <mat-card-title><b>Antecedentes familiares</b></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      {{ infoValoracion.antecedente_familiar }}
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="mb-8 mat-elevation-z1 primary-50-bg">
+    <mat-card-header>
+      <mat-card-title><b>Antecedentes quirúrgicos</b></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      {{ infoValoracion.antecedente_quirurgico }}
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="mb-8 mat-elevation-z1 primary-50-bg">
+    <mat-card-header>
+      <mat-card-title><b>Alergias</b></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      {{ infoValoracion.informe_alergia }}
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="mb-8 mat-elevation-z1 primary-50-bg">
+    <mat-card-header>
+      <mat-card-title><b>Valoración cefalocaudal</b></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      {{ infoValoracion.valoracion_cefalocaudal }}
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="mb-8 mat-elevation-z1 primary-50-bg">
+    <mat-card-header>
+      <mat-card-title><b>Especialidades</b></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      {{ infoValoracion.especialidades }}
+    </mat-card-content>
+  </mat-card>
+
+</mat-dialog-content>
+
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+  <button mat-raised-button (click)="close()" class="btn-new" color="warn"> Cerrar </button>
+</div>

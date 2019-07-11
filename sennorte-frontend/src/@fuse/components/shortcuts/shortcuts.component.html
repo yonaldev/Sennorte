@@ -1,0 +1,38 @@
+<div id="fuse-shortcuts" #shortcuts>
+
+    <div class="shortcuts-mobile-toggle" *ngIf="!mobileShortcutsPanelActive" fxLayout="row" fxLayoutAlign="start center"
+         fxHide fxShow.lt-md>
+        <button mat-icon-button (click)="showMobileShortcutsPanel()">
+            <mat-icon class="amber-600-fg">star</mat-icon>
+        </button>
+    </div>
+
+    <div class="shortcuts" fxHide fxShow.gt-sm>
+
+        <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="0 1 auto">
+
+            <div fxLayout="row" fxLayoutAlign="start center">
+
+                <div class="w-40 h-40 p-4" fxLayout="row" fxLayoutAlign="center center"
+                     *ngFor="let shortcutItem of shortcutItems">
+
+                    <a mat-icon-button matTooltip="{{shortcutItem.title}}" [routerLink]="shortcutItem.url">
+                        <mat-icon class="secondary-text" *ngIf="shortcutItem.icon">{{shortcutItem.icon}}</mat-icon>
+                        <span *ngIf="!shortcutItem.icon" class="h2 secondary-text text-bold">
+                            {{shortcutItem.title.substr(0, 1).toUpperCase()}}
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="shortcuts-mobile-close" fxLayout="row" fxLayoutAlign="start center" fxHide fxShow.lt-md>
+                <button mat-icon-button (click)="hideMobileShortcutsPanel()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

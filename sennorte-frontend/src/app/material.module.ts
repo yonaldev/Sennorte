@@ -1,0 +1,100 @@
+import { NgModule } from '@angular/core';
+
+import { MatButtonModule, 
+    MatTooltipModule, 
+    MatIconModule, 
+    MatCheckboxModule, 
+    MatFormFieldModule, 
+    MatInputModule, 
+    MatPaginatorModule, 
+    MatSortModule, 
+    MatTableModule,
+    MatGridListModule,
+    MatDialogModule,
+    MatBottomSheetModule,
+    MatListModule,
+    MatExpansionModule,
+    MatDatepickerModule,
+    MatMenuModule,
+    MatProgressBarModule,
+    MatToolbarModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatCardModule,
+    MatSlideToggleModule,
+    MatBadgeModule,
+    MatTabsModule,
+    MatChipsModule,
+    MatProgressSpinnerModule,
+    MatTreeModule } from '@angular/material';
+    
+    import { FuseMaterialColorPickerModule } from '@fuse/components';
+
+@NgModule({
+    imports: [
+        // Material
+        MatButtonModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatCheckboxModule,
+        MatPaginatorModule,
+        MatSortModule, 
+        MatTableModule,
+        MatTooltipModule,
+        MatGridListModule,
+        MatDialogModule,
+        MatBottomSheetModule,
+        MatListModule,
+        MatExpansionModule,
+        MatDatepickerModule,
+        MatToolbarModule,
+        MatMenuModule,
+        MatProgressBarModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatCardModule,
+        MatSlideToggleModule,
+        MatBadgeModule,
+        FuseMaterialColorPickerModule,
+        MatTabsModule,
+        MatChipsModule,
+        MatProgressSpinnerModule,
+        MatTreeModule
+    ],
+    exports: [
+        // Material
+        MatButtonModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatCheckboxModule,
+        MatPaginatorModule,
+        MatSortModule, 
+        MatTableModule,
+        MatTooltipModule,
+        MatGridListModule,
+        MatDialogModule,
+        MatBottomSheetModule,
+        MatListModule,
+        MatExpansionModule,
+        MatDatepickerModule,
+        MatToolbarModule,
+        MatMenuModule,
+        MatProgressBarModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatCardModule,
+        MatSlideToggleModule,
+        MatBadgeModule,
+        FuseMaterialColorPickerModule,
+        MatTabsModule,
+        MatChipsModule,
+        MatProgressSpinnerModule,
+        MatTreeModule
+    ]
+})
+
+export class MaterialModule{
+
+}

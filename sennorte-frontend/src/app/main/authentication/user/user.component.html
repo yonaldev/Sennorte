@@ -1,0 +1,131 @@
+<div class="page-layout carded fullwidth">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg" [@animate]="{value:'*',params:{delay:'50ms',y:'-100px'}}"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- CONTENT HEADER -->
+    <div class="header mat-accent-bg p-24" fxLayout="row" fxLayoutAlign="start center" [@animate]="{value:'*',params:{delay:'50ms',y:'-100px'}}">
+      <img class="avatar huge mat-elevation-z1" fxHide.xs fxHide.sm src="assets/images/avatars/profile.jpg">
+      <h2 class="m-0">Editar mi perfil</h2>
+    </div>
+    <!-- / CONTENT HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card mat-white-bg" [@animate]="{value:'*',params:{delay:'300ms',y:'25px'}}">
+
+      <!-- CONTENT TOOLBAR -->
+      <div class="toolbar px-24 py-8" fxLayoutAlign="start center">
+
+      </div>
+      <!-- / CONTENT TOOLBAR -->
+
+      <!-- CONTENT -->
+      <div class="content p-24" fxLayout="row wrap" [@animate]="{value:'*',params:{delay:'300ms',y:'25px'}}">
+
+        <div *ngIf="informacion.document === null" fxLayout="column" fxFlex="100" fxLayoutAlign="center center">
+          <mat-progress-spinner mode="indeterminate" color="accent" [@animate]="{value:'*',params:{delay:'200ms',scale:'.5'}}"></mat-progress-spinner>
+          <h1 [@animate]="{value:'*',params:{delay:'400ms',scale:'.5',opacity:'.1',y:'-15px'}}">Cargando</h1>
+        </div>
+
+        <div *ngIf="informacion.document !== null" fxLayout="row wrap" fxFlex="100">
+          <!-- DATOS BASICOS DEL USUARIO -->
+          <div id="datos-basicos" fxLayout="column wrap" fxFlex="49" fxFlex.xs="100" fxFlex.sm="100" class="p-16"
+            [@animate]="{value:'*',params:{delay:'400ms',y:'-25px'}}">
+            <form fxLayout="column" [@animate]="{value:'*',params:{delay:'400ms',y:'-25px'}}" novalidate>
+              <span class="mat-subheading-2 primary-200-fg" fxLayout="row" fxFlex="100">Datos básicos del usuario</span>
+
+              <div fxLayout="column">
+                <div fxLayout="row" fxFlex="100">
+                  <mat-form-field fxLayout="column" fxFlex="50">
+                    <mat-label>Nombres</mat-label>
+                    <input matInput name="nameUser" [(ngModel)]="informacion.name">
+                    <span matPrefix class="fa fa-user primary-400-fg">&nbsp;&nbsp;</span>
+                  </mat-form-field>
+
+                  <mat-form-field fxLayout="column" fxFlex="50">
+                    <mat-label>Apellidos</mat-label>
+                    <input matInput name="lastnameUser" [(ngModel)]="informacion.lastname">
+                  </mat-form-field>
+                </div>
+
+                <mat-form-field fxLayout="column" fxFlex="50">
+                  <mat-label>Correo electronico</mat-label>
+                  <input matInput name="email" [(ngModel)]="informacion.email">
+                  <span matPrefix class="fa fa-envelope primary-400-fg">&nbsp;&nbsp;</span>
+                </mat-form-field>
+
+                <mat-form-field fxLayout="column" fxFlex="50">
+                  <mat-label>Confirmar correo electronico</mat-label>
+                  <input matInput name="email">
+                  <span matPrefix class="fa fa-envelope primary-400-fg">&nbsp;&nbsp;</span>
+                </mat-form-field>
+
+              </div>
+
+              <div fxLayout="row" fxFlex="100" fxLayoutAlign="end center">
+                <button color="primary" mat-raised-button>Guardar</button>
+              </div>
+
+            </form>
+
+          </div>
+
+          <mat-divider fxLayout="column" fxFlex="2" fxHide.sm fxHide.xs mat-inset [vertical]="true"></mat-divider>
+          <mat-divider mat-inset fxHide fxShow.sm></mat-divider>
+          <!-- DATOS DE CONTRASEÑA -->
+          <div id="datos-contrasena" fxLayout="column" fxFlex="49" fxFlex.xs="100" fxFlex.sm="100" class="p-16">
+            <span class="mat-subheading-2 primary-200-fg h-40 mb-0" fxLayout="row" fxFlex="100">Cambiar contraseña</span>
+            <div class="message-box success" *ngIf="cambiada">
+              {{ messagePassword }}
+            </div>
+            <div class="message-box error" *ngIf="error">
+              {{ messagePassword }}
+            </div>
+            <form fxLayout="column" fxFlex="100" [formGroup]="formPass" (ngSubmit)="changePassword()" novalidate>
+
+              <mat-form-field>
+                <mat-label>Contraseña actual</mat-label>
+                <input matInput type="password" formControlName="actual" [(ngModel)]="password.actual">
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Contraseña nueva</mat-label>
+                <input matInput type="password" formControlName="password" [(ngModel)]="password.nueva">
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Confirmación de contraseña</mat-label>
+                <input matInput type="password" formControlName="passwordConfirm">
+              </mat-form-field>
+
+              <div fxLayout="row" fxFlex="100" fxLayoutAlign="end center">
+                <button color="primary" mat-raised-button>Guardar</button>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center" fxFlex="100" *ngIf="informacion.document !== null">
+          <blockquote class="reverse">
+            <p>
+              Los cambios se veran en tu siguiente inicio de sesión
+            </p>
+          </blockquote>
+        </div>
+
+
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

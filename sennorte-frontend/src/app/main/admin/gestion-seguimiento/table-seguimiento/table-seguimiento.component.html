@@ -1,0 +1,73 @@
+<div class="py-28">
+  <div class="row" fxHide.gt-xs>
+    <div class="col-md-12">
+      <mat-form-field appearance="fill">
+        <mat-label>Buscar usuario</mat-label>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar por documento o nombre de usuario">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="w-100-p pt-16 fuse-white-bg mat-elevation-z8">
+    <div class="col-md-12">
+
+
+      <mat-form-field appearance="fill" fxFlex fxHide fxShow.gt-xs class="pb-0" fxLayoutAlign="end">
+        <mat-label>Buscar usuario</mat-label>
+        <input matInput (keyup)="applyFilter($event.target.value)">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+    </div>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="documento" class="w-100-p">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Documento </th>
+      <td class="roboto" mat-cell *matCellDef="let row"> {{row.id_residente}} </td>
+    </ng-container>
+
+    <!-- Progress Column -->
+    <ng-container matColumnDef="nombrecompleto" class="w-100-p">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+      <td class="roboto" mat-cell *matCellDef="let row"> {{ row.nombre1_residente }} {{ row.nombre2_residente ? row.nombre2_residente : '' }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="apellido" class="w-100-p">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </th>
+      <td class="roboto" mat-cell *matCellDef="let row"> {{row.apellido_residente }} </td>
+    </ng-container>
+
+
+    <!-- Color Column -->
+    <ng-container matColumnDef="accion">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="w-100"> Acciones </th>
+      <td mat-cell *matCellDef="let row">
+
+        <!-- MODAL DE INGRESAR SEGUIMIENTO  -->
+        <div class="button-row" fxLayoutAlign="end">
+          <button mat-mini-fab color="accent" (click)="ModalS(row)" [matTooltip]="'Agregar Informe ' + row.nombre1_residente"
+            matTooltipPosition="left">
+            <mat-icon>assignment_ind</mat-icon>
+          </button>
+
+          <!-- MODAL DE CONSULTAR SEGUIMIENTO  -->
+          <button mat-mini-fab color="primary" [matTooltip]="'Consultar Informes  ' + row.nombre1_residente"
+            matTooltipPosition="left" (click)="listarInforme(row.id_residente)">
+            <mat-icon>folder</mat-icon>
+          </button>
+
+        </div>
+
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons></mat-paginator>
+</div>
